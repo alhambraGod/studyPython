@@ -1857,3 +1857,65 @@ class SolutionEvaluateReversePolishNotation:
     # @return {int} the value
     def evalRPN(self, tokens):
         # Write your code here
+        pass
+
+# Search in Rotated Sorted Array
+# Suppose a sorted array is rotated at some pivot unknown to you beforehand.
+# (i.e., 0 1 2 4 5 6 7 might become 4 5 6 7 0 1 2).
+# You are given a target value to search. If found in the array return its index, otherwise return -1.
+# You may assume no duplicate exists in the array.
+# Example
+# For [4, 5, 1, 2, 3] and target=1, return 2.
+# For [4, 5, 1, 2, 3] and target=0, return -1.
+class SolutionSearchTargetInRotatedSortedArray:
+    """
+    @param A : a list of integers
+    @param target : an integer to be searched
+    @return : an integer
+    """
+    def search(self, A, target):
+        # write your code here
+        sl = 0
+        sr = (len(A) - 1) // 2
+        nsl = sr + 1
+        nsr = len(A) - 1
+        while (sl <= sr):
+            # [start, mid], [mid + 1, end]
+            if (A[sl] > A[sr]):
+                tempsl = sl
+                tempsr = sr
+                sl = nsl
+                sr = nsr
+                nsl = tempsl
+                nsr = tempsr
+            if (A[sl] <= target and target <= A[sr]):
+                if (A[sl] == target):
+                    return sl
+                if (A[sr] == target):
+                    return sr
+                start = sl + 1
+                end = sr - 1
+            else:
+                start = nsl
+                end = nsr
+            sl = start
+            sr = start + (end - start) // 2
+            nsl = sr + 1
+            nsr = end
+        return -1
+
+# Copy List with Random Pointer
+# A linked list is given such that each node contains an additional
+# random pointer which could point to any node in the list or null.
+# Return a deep copy of the list.
+# Definition for singly-linked list with a random pointer.
+class RandomListNode:
+    def __init__(self, x):
+        self.label = x
+        self.next = None
+        self.random = None
+class Solution:
+    # @param head: A RandomListNode
+    # @return: A RandomListNode
+    def copyRandomList(self, head):
+        # write your code here

@@ -688,5 +688,10 @@ print(SolutionUniqueBST().numTrees(20))
 print('SolutionEvaluateReversePolishNotation')
 print(SolutionEvaluateReversePolishNotation().evalRPN(["2", "1", "+", "3", "*"]))
 print(SolutionEvaluateReversePolishNotation().evalRPN(["4", "13", "5", "/", "+"]))
+
+print('SolutionSearchTargetInRotatedSortedArray')
+print(SolutionSearchTargetInRotatedSortedArray().search([4, 5, 1, 2, 3], 1))
+print(SolutionSearchTargetInRotatedSortedArray().search([4, 5, 1, 2, 3], 0))
+print(SolutionSearchTargetInRotatedSortedArray().search([4, 5, 6, 20, 30, 0, 1, 2, 3], 25))
 ###########################################
 
