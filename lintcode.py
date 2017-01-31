@@ -1914,8 +1914,87 @@ class RandomListNode:
         self.label = x
         self.next = None
         self.random = None
-class Solution:
+
+    def listGenerator(l):
+        prev = head = None
+        for value in l:
+            newNode = RandomListNode(value)
+            if (prev == None):
+                head = prev = newNode
+            else:
+                prev.next = newNode
+            prev = newNode
+        return head
+
+    def listPrint(self):
+        head = self
+        print('print random list nodes')
+        while not (head == None):
+            randomStr = 'None'
+            if (head.random != None):
+                randomStr = head.random.label
+            print('%d (%s)--> ' % (head.label, randomStr))
+            head = head.next
+
+
+# solution:
+# 1) copy all list, each new node after old node
+# 2) navigate: set .random info
+# 3) remove old nodes, leave new nodes
+class SolutionCopyRandomListNode:
+    # def findInCopied(self, copied, node):
+    #     i = 0
+    #     while (i < len(copied)):
+    #         if (copied[i] == node):
+    #             return True
+    #         i += 1
+    #     return False
+    #
+    #     p = copied
+    #     while (p != None):
+    #         if (p == copied):
+    #             return True
+    #         p = p.next
+    #     return False
+
     # @param head: A RandomListNode
     # @return: A RandomListNode
     def copyRandomList(self, head):
         # write your code here
+        if (head == None):
+            return None
+        # 1) copy all list, each new node after old node
+        p = head
+        while (p != None):
+            newNode = RandomListNode(p.label)
+            newNode.next = p.next
+            p.next = newNode
+            p = newNode.next
+        # print('step 1')
+        # head.listPrint()
+
+        # 2) navigate: set .random info
+        p = head
+        while (p != None):
+            newNode = p.next
+            if (p.random == None):
+                newNode.random = None
+            else:
+                newNode.random = p.random.next
+            p = newNode.next  # next old node
+        # print('step 2')
+        # head.listPrint()
+
+        # 3) remove old nodes, leave new nodes
+        newHead = head.next
+        newNode = newHead
+        p = head
+        while (p != None):
+            p.next = newNode.next
+            p = p.next
+            if (p != None):
+                newNode.next = p.next
+                newNode = newNode.next
+        # print('step 3:')
+        # newHead.listPrint()
+        return newHead

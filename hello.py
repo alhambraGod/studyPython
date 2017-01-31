@@ -693,5 +693,29 @@ print('SolutionSearchTargetInRotatedSortedArray')
 print(SolutionSearchTargetInRotatedSortedArray().search([4, 5, 1, 2, 3], 1))
 print(SolutionSearchTargetInRotatedSortedArray().search([4, 5, 1, 2, 3], 0))
 print(SolutionSearchTargetInRotatedSortedArray().search([4, 5, 6, 20, 30, 0, 1, 2, 3], 25))
+
+print('SolutionCopyRandomListNode: test case 1')
+head = RandomListNode.listGenerator([5, 2, 1, 3])
+head0 = head
+head1 = head0.next
+head2 = head1.next
+head3 = head2.next
+head0.random = head2
+head1.random = head0
+head2.random = head2
+head3.random = head2
+head.listPrint()
+SolutionCopyRandomListNode().copyRandomList(head).listPrint()
+
+
+print('SolutionCopyRandomListNode: test case 2')
+head = RandomListNode.listGenerator([5])
+head0 = head
+head0.random = None
+head.listPrint()
+SolutionCopyRandomListNode().copyRandomList(head).listPrint()
+
+
+print('\nEND')
 ###########################################
 
