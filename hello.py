@@ -715,6 +715,11 @@ head0.random = None
 head.listPrint()
 SolutionCopyRandomListNode().copyRandomList(head).listPrint()
 
+print('SolutionTrappingRainWater')
+print(SolutionTrappingRainWater().trapRainWater([0,1,0,2,1,0,1,3,2,1,2,1]))
+
+print('SolutionLargetstNumber')
+print(SolutionLargetstNumber().largestNumber([1, 20, 23, 4, 8]))
 
 print('\nEND')
 ###########################################

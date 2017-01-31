@@ -1438,6 +1438,12 @@ class SolutionHistogram:
         return maxArea
 
 
+#  Container With Most Water
+# Given n non-negative integers a1, a2, ..., an, where each represents a point at coordinate (i, ai). n vertical lines are drawn such that the two endpoints of line i is at (i, ai) and (i, 0). Find two lines, which together with x-axis forms a container, such that the container contains the most water.
+#  Notice
+# You may not slant the container.
+# Example
+# Given [1,3,2], the max area of the container is 2.
 # solution: start from 2 edrges, move 1 shorter height evey time
 class SolutionContainerWithMostWater:
     def maxArea(self, heights):
@@ -1998,3 +2004,59 @@ class SolutionCopyRandomListNode:
         # print('step 3:')
         # newHead.listPrint()
         return newHead
+
+# Trapping Rain Water
+# Given n non-negative integers representing an elevation map
+# where the width of each bar is 1, compute how much water
+# it is able to trap after raining.
+# Example
+# Given [0,1,0,2,1,0,1,3,2,1,2,1], return 6.
+# Solution:for Hi, find maxBefore and maxAfter, water is max(0, min(maxBefore, maxAfter) - Hi)
+class SolutionTrappingRainWater:
+    def findMaxBefore(self, heights):
+        i = 1
+        prevMax = heights[0]
+        maxBefore = list([prevMax])
+        while (i < len(heights)):
+            prevMax = max(prevMax, heights[i])
+            maxBefore.append(prevMax)
+            i += 1
+        return maxBefore
+
+    def findMaxAfter(self, heights):
+        i = len(heights) - 2
+        prevMax = heights[-1]
+        maxAfter = list([prevMax])
+        while (i >= 0):
+            prevMax = max(prevMax, heights[i])
+            maxAfter.insert(0, prevMax)
+            i -= 1
+        return maxAfter
+
+    # @param heights: a list of integers
+    # @return: a integer
+    def trapRainWater(self, heights):
+        # write your code here
+        if (len(heights) <= 2):
+            return 0
+        sum = 0
+        maxBefore = self.findMaxBefore(heights)
+        maxAfter = self.findMaxAfter(heights)
+        i = 1
+        while (i < len(heights) - 1):
+            sum += max(0, min(maxBefore[i - 1], maxAfter[i + 1]) - heights[i])
+            i += 1
+        return  sum
+#
+# Largest Number
+# Given a list of non negative integers, arrange them such that they form the largest number.
+#  Notice
+# The result may be very large, so you need to return a string instead of an integer.
+# Example
+# Given [1, 20, 23, 4, 8], the largest formed number is 8423201.
+class SolutionLargetstNumber:
+    #@param num: A list of non negative integers
+    #@return: A string
+    def largestNumber(self, num):
+        # write your code here
+        pass
