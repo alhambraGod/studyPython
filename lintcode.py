@@ -2054,9 +2054,49 @@ class SolutionTrappingRainWater:
 # The result may be very large, so you need to return a string instead of an integer.
 # Example
 # Given [1, 20, 23, 4, 8], the largest formed number is 8423201.
+# solution: sort in dest dict order
+
+
+
 class SolutionLargetstNumber:
     #@param num: A list of non negative integers
     #@return: A string
+    # notice: string sorting for [101, 1] returns ['101', '1'] is wrong: result is 1011; while correct result is 1101
     def largestNumber(self, num):
         # write your code here
-        pass
+        if (len(num) == 0):
+            return 0
+        strArray = list()
+        i = 0
+        while (i < len(num)):
+            strArray.append(str(num[i]))
+            i += 1
+        strArray = sorted(strArray, reverse = True)
+        # print(strArray)
+
+        # handle: 1 and 10
+        i = len(strArray) - 1
+        while (i >= 1):
+            if (int(strArray[i - 1] + strArray[i]) < int(strArray[i] + strArray[i - 1])):
+                temp = strArray[i - 1]
+                strArray[i - 1] = strArray[i]
+                strArray[i] = temp
+                # [90, 9, 9]
+                i = min(len(strArray) - 1, i + 1)
+            else:
+                i -= 1
+
+        # print(strArray)
+
+        result = ''
+        i = 0
+        while (i < len(strArray)):
+            result += strArray[i]
+            i += 1
+
+        # use str(int()) for '00'
+        # return str(int(result))
+        # remove leading '0'
+        if (strArray[0] == '0'):
+            return '0'
+        return str(int(result))

@@ -718,8 +718,24 @@ SolutionCopyRandomListNode().copyRandomList(head).listPrint()
 print('SolutionTrappingRainWater')
 print(SolutionTrappingRainWater().trapRainWater([0,1,0,2,1,0,1,3,2,1,2,1]))
 
+# def cmp_ignore_case(s1, s2):
+#     m1=s1.lower()
+#     m2=s2.lower()
+#     if m1<m2:
+#         return -1
+#     if m1>m2:
+#         return 1
+#     return 0
+#
+# print(sorted(['bob', 'about', 'Zoo', 'Credit'], lambda x,y: cmp_ignore_case(x,y)))
+# exit()
+
 print('SolutionLargetstNumber')
-print(SolutionLargetstNumber().largestNumber([1, 20, 23, 4, 8]))
+print(SolutionLargetstNumber().largestNumber([91,90,9,92,90,9,89]))
+# print(SolutionLargetstNumber().largestNumber([5, 1, 23, 20, 4, 8]))
+# print(SolutionLargetstNumber().largestNumber([0,0]))
+# print(SolutionLargetstNumber().largestNumber([101,1]))
+# print(SolutionLargetstNumber().largestNumber([10, 10,1]))
 
 print('\nEND')
 ###########################################
