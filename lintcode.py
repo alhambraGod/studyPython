@@ -2242,3 +2242,77 @@ class SolutionLetterCombinationOfPhoneNumber:
             if (not self.getNext(lenList, digitList)):
                 return result
         return result
+
+# Word Search
+#
+# Given a 2D board and a word, find if the word exists in the grid.
+# The word can be constructed from letters of sequentially adjacent cell,
+# where "adjacent" cells are those horizontally or vertically neighboring.
+# The same letter cell may not be used more than once.
+# Example
+# Given board =
+# [
+#   "ABCE",
+#   "SFCS",
+#   "ADEE"
+# ]
+# word = "ABCCED", -> returns true,
+# word = "SEE", -> returns true,
+# word = "ABCB", -> returns false.
+class SolutionWordSearchIn2DBoard:
+
+    def recursiveSearch(self, board, word, path, i, j, wordIndex):
+        # if (i < 0 or i >= len(board) or j < 0 or j >= len(board[0])):
+        #     return False
+        if (path[i][j] == True):
+            return False    # use only once
+        if (board[i][j] == word[wordIndex]):
+            if (wordIndex == len(word) - 1):
+                return True
+            path[i][j] = True # searched
+            # print(path)
+            if (j - 1 >= 0 and self.recursiveSearch(board, word, path, i, j - 1, wordIndex + 1)):
+                return True
+            if (i - 1 >= 0 and self.recursiveSearch(board, word, path, i - 1, j, wordIndex + 1)):
+                return True
+            if (j + 1 < len(board[0]) and self.recursiveSearch(board, word, path, i, j + 1, wordIndex + 1)):
+                return True
+            if (i + 1 < len(board) and self.recursiveSearch(board, word, path, i + 1, j, wordIndex + 1)):
+                return True
+        path[i][j] = False  # reset searched flag
+        return False
+
+    # not needed
+    def clearPath(self, path):
+        i = 0
+        while (i < len(path)):
+            j = 0
+            while (j < len(path[0])):
+                path[i][j] = False
+                j += 1
+            i += 1
+
+    def search(self, board, word, path):
+        i = 0
+        while (i < len(board)):
+            j = 0
+            while (j < len(board[0])):
+                # self.clearPath(path)
+                if (self.recursiveSearch(board, word, path, i, j, 0)):
+                    return True
+                j += 1
+            i += 1
+        return False
+
+    # @param board, a list of lists of 1 length string
+    # @param word, a string
+    # @return a boolean
+    def exist(self, board, word):
+        if (len(board) == 0):
+            return False
+        path = list()
+        i = 0
+        while (i < len(board)):
+            path.append(list(False for x in range(len(board[0]))))
+            i += 1
+        return self.search(board, word, path)

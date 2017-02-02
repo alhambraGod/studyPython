@@ -753,6 +753,13 @@ print('SolutionLetterCombinationOfPhoneNumber')
 print(SolutionLetterCombinationOfPhoneNumber().letterCombinations('23'))
 print(SolutionLetterCombinationOfPhoneNumber().letterCombinations('2279'))
 
+print('SolutionWordSearchIn2DBoard')
+print(SolutionWordSearchIn2DBoard().exist(["ABCE","SFES","ADEE"], 'ABCESEEEFS'))
+print(SolutionWordSearchIn2DBoard().exist(["ABCE","SFCS","ADEE"], 'ABCCED'))
+print(SolutionWordSearchIn2DBoard().exist(["ABCE","SFCS","ADEE"], 'SEE'))
+print(SolutionWordSearchIn2DBoard().exist(["ABCE","SFCS","ADEE"], 'AK'))
+print(SolutionWordSearchIn2DBoard().exist(["ABCE","SFCS","ADEE"], 'ABCB'))
+
 print('\nEND')
 ###########################################
 
