@@ -255,5 +255,90 @@ class TestSelf:
     def prt(self):
         print('self in TestSelf: %s' % self)
 
+import time
+import xlrd
+import xlwt # pip install xlwt
+import xlutils.copy
 
+class ConvertUnixTime:
 
+    def __init__(self):
+        super().__init__()
+        self.unixTimes = list()
+        self.newTimes = list()
+        self.fileName = "idev1.xlsx"
+        self.sheetName = "idev"
+        self.startRow = 1
+        self.endRow = 39086
+        # self.endRow = 58005
+        self.dataCol = 0
+        self.newCol = 3
+
+    # workbook = xlrd.open_workbook('E:\\Code\\Python\\testdata.xls')
+    # # 抓取所有sheet页的名称
+    # worksheets = workbook.sheet_names()
+    # print('worksheets is %s' % worksheets)
+    # # 定位到sheet1
+    # worksheet1 = workbook.sheet_by_name(u'Sheet1')
+    # num_rows = worksheet1.nrows
+    # for curr_row in range(num_rows):
+    #     row = worksheet1.row_values(curr_row)
+    # print('row%s is %s' % (curr_row, row))
+    # # 遍历sheet1中所有列col
+    # num_cols = worksheet1.ncols
+    # for curr_col in range(num_cols):
+    #     col = worksheet1.col_values(curr_col)
+    # print('col%s is %s' % (curr_col, col))
+    # # 遍历sheet1中所有单元格cell
+    # for rown in range(num_rows):
+    #     for coln in range(num_cols):
+    #         cell = worksheet1.cell_value(rown, coln)
+    # print
+    # cell
+    #
+    def readExcel(self):
+        workbook = xlrd.open_workbook(self.fileName)
+        worksheet = workbook.sheet_by_name(self.sheetName)
+        row = self.startRow
+        while (row < self.endRow):
+            # self.unixTimes.append(worksheet.cell_value(row, self.dataCol) // 1000)
+            self.newTimes.append(worksheet.cell_value(row, self.dataCol) // 1000)
+            row += 1
+            if (row >= 100 and row % 100 == 0):
+                print('Read row: %d' % row)
+            # print(self.unixTimes)
+
+    # 创建workbook和sheet对象
+    # workbook = xlwt.Workbook()  # 注意Workbook的开头W要大写
+    # sheet1 = workbook.add_sheet('sheet1', cell_overwrite_ok=True)
+    # sheet2 = workbook.add_sheet('sheet2', cell_overwrite_ok=True)
+    # # 向sheet页中写入数据
+    # sheet1.write(0, 0, 'this should overwrite1')
+    # 保存该excel文件,有同名文件时直接覆盖
+    # workbook.save('E:\\Code\\Python\\test2.xls')
+    def writeExcel(self):
+        from xlutils.copy import copy
+        oldWorkbook = xlrd.open_workbook(self.fileName)
+        workbook = copy(oldWorkbook)
+        worksheet = workbook.get_sheet(0)
+        i = 0
+        row = self.startRow
+        while (i < len(self.newTimes)):
+            t = self.newTimes[i]
+            newTime = time.gmtime(t)
+            strTime = "%d/%d/%d" % (newTime.tm_year, newTime.tm_mon, newTime.tm_mday)
+            worksheet.write(row, self.newCol, strTime)
+            # print(strTime)
+            row += 1
+            i += 1
+            if (i >= 100 and i % 100 == 0):
+                print('Written row: %d' % i)
+
+        print('workbook.save')
+        # workbook.save(self.fileName)
+        workbook.save('new1.xls')
+
+    def convert(self):
+        self.readExcel()
+        self.writeExcel()
+        return
