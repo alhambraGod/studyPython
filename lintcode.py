@@ -2190,3 +2190,55 @@ class SolutionHappyNumber:
             # print(newNum)
             result = self.check(newNum)
         return result
+
+# Letter Combinations of a Phone Number
+# Given a digit string excluded 01, return all possible letter combinations that the number could represent.
+# A mapping of digit to letters (just like on the telephone buttons) is given below.
+#  Notice
+# Although the above answer is in lexicographical order, your answer could be in any order you want.
+# Given "23"
+# Return ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"]
+class SolutionLetterCombinationOfPhoneNumber:
+    letterMap = {'2':'abc', '3':'def', '4':'ghi', '5':'jkl', '6':'mno', '7':'pqrs', '8':'tuv', '9':'wxyz'}
+    def getMap(self, ch):
+        return self.letterMap[ch]
+
+    def getWord(self, digits, digitList):
+        word = ''
+        i = 0
+        while (i < len(digitList)):
+            word += self.getMap(digits[i])[digitList[i]]
+            i += 1
+        return word
+
+    def getNext(self, lenList, digitList):
+        i = 0
+        while (i < len(digitList)):
+            currentIndex = digitList[i]
+            if (currentIndex + 1 < lenList[i]):
+                digitList[i] = currentIndex + 1
+                return True
+            else:
+                digitList[i] = 0
+            i += 1
+        return False
+
+    # @param {string} digits A digital string
+    # @return {string[]} all posible letter combinations
+    def letterCombinations(self, digits):
+        # Write your code here
+        if (len(digits) == 0):
+            return []
+        lenList = list()
+        i = 0
+        while (i < len(digits)):
+            lenList.append(len(self.getMap(digits[i])))
+            i += 1
+        # print(lenList)
+        result = list()
+        digitList = list(0 for x in range(len(lenList)))
+        while (True):
+            result.append(self.getWord(digits, digitList))
+            if (not self.getNext(lenList, digitList)):
+                return result
+        return result
