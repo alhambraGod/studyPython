@@ -202,6 +202,20 @@ class SolutionSingleNumber:
             return 0
         return reduce(lambda x, y: x ^ y, A)
 
+
+# Single Number II
+# Given 3*n + 1 numbers, every numbers occurs triple times except one, find it.
+# Example
+# Given [1,1,2,3,3,3,2,2,4,1] return 4
+class SolutionSingleNumberII:
+    """
+	@param A : An integer array
+	@return : An integer
+    """
+    def singleNumberII(self, A):
+        # write your code here
+        pass
+
 # bool flags for characters
 class CharBoolFlags:
     flags = list(-1 for x in range(256))
@@ -2100,3 +2114,52 @@ class SolutionLargetstNumber:
         if (strArray[0] == '0'):
             return '0'
         return str(int(result))
+
+# Happy Number
+# Write an algorithm to determine if a number is happy.
+# A happy number is a number defined by the following process:
+# Starting with any positive integer, replace the number by the sum of
+# the squares of its digits, and repeat the process until the number equals 1
+# (where it will stay), or it loops endlessly in a cycle which does not include 1.
+# Those numbers for which this process ends in 1 are happy numbers.
+# Example
+# 19 is a happy number
+# 1^2 + 9^2 = 82
+# 8^2 + 2^2 = 68
+# 6^2 + 8^2 = 100
+# 1^2 + 0^2 + 0^2 = 1
+class SolutionHappyNumber:
+
+    def __init__(self):
+        self.midValues = set()
+
+    def calcSquare(self, newNum):
+        sum = 0
+        while (True):
+            oneDigit = newNum  % 10
+            sum += (oneDigit * oneDigit)
+            if (newNum < 10):
+                return sum
+            newNum = newNum // 10
+        return None
+
+    # return None means continue
+    def check(self, newNum):
+        if (newNum == 1):
+            return True
+        if (newNum in self.midValues):
+            return False
+        self.midValues.add(newNum)
+        return None
+
+    # @param {int} n an integer
+    # @return {boolean} true if this is a happy number or false
+    def isHappy(self, n):
+        # Write your code here
+        result = None
+        newNum = n
+        while (result == None):
+            newNum = self.calcSquare(newNum)
+            # print(newNum)
+            result = self.check(newNum)
+        return result

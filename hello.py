@@ -732,10 +732,18 @@ print(SolutionTrappingRainWater().trapRainWater([0,1,0,2,1,0,1,3,2,1,2,1]))
 
 print('SolutionLargetstNumber')
 print(SolutionLargetstNumber().largestNumber([91,90,9,92,90,9,89]))
-# print(SolutionLargetstNumber().largestNumber([5, 1, 23, 20, 4, 8]))
-# print(SolutionLargetstNumber().largestNumber([0,0]))
-# print(SolutionLargetstNumber().largestNumber([101,1]))
-# print(SolutionLargetstNumber().largestNumber([10, 10,1]))
+print(SolutionLargetstNumber().largestNumber([5, 1, 23, 20, 4, 8]))
+print(SolutionLargetstNumber().largestNumber([0,0]))
+print(SolutionLargetstNumber().largestNumber([101,1]))
+print(SolutionLargetstNumber().largestNumber([10, 10,1]))
+
+print('SolutionHappyNumber')
+print(SolutionHappyNumber().isHappy(19))
+print(SolutionHappyNumber().isHappy(0))
+print(SolutionHappyNumber().isHappy(345))
+
+print('SolutionSingleNumberII')
+print(SolutionSingleNumberII().singleNumberII([1,1,2,3,3,3,2,2,4,1]))
 
 print('\nEND')
 ###########################################
