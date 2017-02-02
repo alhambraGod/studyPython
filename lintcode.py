@@ -214,7 +214,34 @@ class SolutionSingleNumberII:
     """
     def singleNumberII(self, A):
         # write your code here
-        pass
+        if (len(A) == 0):
+            return 0
+        if (len(A) == 1):
+            return A[0]
+        bits = list(0 for x in range(32))  # 32 bits
+        i = 0
+        while (i < len(A)):
+            num = A[i]
+            j = 0
+            while (num > 0):
+                bits[j] += num & 1
+                num >>= 1
+                j += 1
+            i += 1
+        # find bits of 1 after mod 3
+        i = 0
+        while (i < len(bits)):
+            bits[i] %= 3
+            i += 1
+        # find result number
+        result = 0
+        bitValue = 1
+        i = 0
+        while (i < len(bits)):
+            result += bits[i] * bitValue
+            bitValue *= 2
+            i += 1
+        return result
 
 # bool flags for characters
 class CharBoolFlags:
