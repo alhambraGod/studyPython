@@ -760,6 +760,16 @@ print(SolutionWordSearchIn2DBoard().exist(["ABCE","SFCS","ADEE"], 'SEE'))
 print(SolutionWordSearchIn2DBoard().exist(["ABCE","SFCS","ADEE"], 'AK'))
 print(SolutionWordSearchIn2DBoard().exist(["ABCE","SFCS","ADEE"], 'ABCB'))
 
+print('SolutionDivideTwoIntegers')
+print(SolutionDivideTwoIntegers().divide(-1, 1))
+print(SolutionDivideTwoIntegers().divide(-1, 0))
+print(SolutionDivideTwoIntegers().divide(0, 29))
+print(SolutionDivideTwoIntegers().divide(9, 9))
+print(SolutionDivideTwoIntegers().divide(8, 9))
+print(SolutionDivideTwoIntegers().divide(18, 9))
+print(SolutionDivideTwoIntegers().divide(100, 9))
+print(SolutionDivideTwoIntegers().divide(100, 2))
+
 print('\nEND')
 ###########################################
 

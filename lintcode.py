@@ -2316,3 +2316,59 @@ class SolutionWordSearchIn2DBoard:
             path.append(list(False for x in range(len(board[0]))))
             i += 1
         return self.search(board, word, path)
+
+# Divide Two Integers
+# Divide two integers without using multiplication, division and mod operator.
+# If it is overflow, return 2147483647
+# Example
+# Given dividend = 100 and divisor = 9, return 11.
+class SolutionDivideTwoIntegers:
+    # @param {int} dividend the dividend
+    # @param {int} divisor the divisor
+    # @return {int} the result
+    def divide(self, dividend, divisor):
+        # Write your code here
+        if ((dividend >= 0 and divisor >= 0) or (dividend < 0 and divisor < 0)):
+            negSign = False
+        else:
+            negSign = True
+        if (dividend < 0):
+            dividend = 0 - dividend
+        if (divisor < 0):
+            divisor = 0 - divisor
+
+        if (divisor == 0 or dividend < divisor):
+            return 0
+        mid = list([divisor])
+
+        while (dividend >= divisor and (dividend - divisor) >= (mid[-1] + mid[-1])):
+            mid.append(mid[-1] + mid[-1])
+            dividend -= mid[-1]
+        # print(mid, dividend, divisor)
+        MAX_RESULT = 2147483647
+        result = 0
+        i = 0
+        power2 = 1
+        while (True):
+            result += power2
+            if (result > MAX_RESULT and (not negSign)):
+                return MAX_RESULT
+            i += 1
+            if (i >= len(mid)):
+                break
+            power2 <<= 1
+        # print(mid, dividend, divisor, result)
+        i = len(mid) - 1
+        while (i >= 0):
+            if (dividend - mid[i] >= divisor):
+                result += power2
+                if (result > MAX_RESULT and (not negSign)):
+                    return MAX_RESULT
+                dividend -= mid[i]
+                if (dividend < divisor):
+                    break
+            power2 >>= 1
+            i -= 1
+        if (negSign):
+            result = 0 - result
+        return result
