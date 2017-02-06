@@ -2372,3 +2372,53 @@ class SolutionDivideTwoIntegers:
         if (negSign):
             result = 0 - result
         return result
+
+# Integer to Roman
+# Given an integer, convert it to a roman numeral.
+# The number is guaranteed to be within the range from 1 to 3999.
+# Clarification
+# 罗马数字共有七个，即I(1)，V(5)，X(10)，L(50)，C(100)，D(500)，M(1000)。
+# 按照下面的规则可以表示任意正整数。
+# 重复数次：一个罗马数字重复几次，就表示这个数的几倍。
+# 右加左减：在一个较大的罗马数字的右边记上一个较小的罗马数字，表示大数字加小数字。
+# 在一个较大的数字的左边记上一个较小的罗马数字，表示大数字减小数字。
+# 但是，左减不能跨越等级。比如，99不可以用IC表示，用XCIX表示
+# What is Roman Numeral?
+# https://en.wikipedia.org/wiki/Roman_numerals
+# https://zh.wikipedia.org/wiki/%E7%BD%97%E9%A9%AC%E6%95%B0%E5%AD%97
+# http://baike.baidu.com/view/42061.htm
+# Example
+# 4 -> IV
+# 12 -> XII
+# 21 -> XXI
+# 99 -> XCIX
+# more examples at: http://literacy.kent.edu/Minigrants/Cinci/romanchart.htm
+class SolutionIntegerToRoman:
+    # @param {int} n The integer
+    # @return {string} Roman representation
+    def intToRoman(self, n):
+        if (n <=0 or n > 3999):
+            return ''
+        # Write your code here
+        # oneDict = {1:'I', 2:'II', 3:'III', 4:'IV', 5:'V', 6:'VI', 7:'VII', 8:'VIII', 9:'IX', }
+        oneDict = {1:'0', 2:'00', 3:'000', 4:'01', 5:'1', 6:'10', 7:'100', 8:'1000', 9:'02', }
+        romanList = (['IVX', 'XLC', 'CDM'])
+        romanList = (['IVX', 'XLC', 'CDM', 'M'])
+        result = ''
+        i = -1
+        while (n > 0):
+            i += 1
+            if (i >= len(romanList)):
+                return "overflow"
+            digit = n % 10
+            if (digit > 0):
+                dict = oneDict[digit]
+                roman = romanList[i]
+                digitString = ''
+                j = 0
+                while (j < len(dict)):
+                    digitString += roman[int(dict[j])]
+                    j += 1
+                result = digitString + result
+            n //= 10
+        return result

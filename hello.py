@@ -770,6 +770,13 @@ print(SolutionDivideTwoIntegers().divide(18, 9))
 print(SolutionDivideTwoIntegers().divide(100, 9))
 print(SolutionDivideTwoIntegers().divide(100, 2))
 
+print('SolutionIntegerToRoman')
+print(SolutionIntegerToRoman().intToRoman(4))
+print(SolutionIntegerToRoman().intToRoman(12))
+print(SolutionIntegerToRoman().intToRoman(21))
+print(SolutionIntegerToRoman().intToRoman(99))
+print(SolutionIntegerToRoman().intToRoman(2199))
+
 print('\nEND')
 ###########################################
 
