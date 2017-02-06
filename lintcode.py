@@ -2422,3 +2422,103 @@ class SolutionIntegerToRoman:
                 result = digitString + result
             n //= 10
         return result
+
+# Word Ladder
+# Given two words (start and end), and a dictionary, find the length of shortest transformation sequence from start to end, such that:
+# Only one letter can be changed at a time
+# Each intermediate word must exist in the dictionary
+#  Notice
+# Return 0 if there is no such transformation sequence.
+# All words have the same length.
+# All words contain only lowercase alphabetic characters.
+# Example
+# Given:
+# start = "hit"
+# end = "cog"
+# dict = ["hot","dot","dog","lot","log"]
+# As one shortest transformation is "hit" -> "hot" -> "dot" -> "dog" -> "cog",
+# return its length 5.
+# solution: build a graph, O(N2) time, O(N)space
+class SolutionWordLadder:
+    def findWordInCurDict_TLE(self, curDict, word):
+        i = 0
+        while (i < len(curDict)):
+            oneWord = curDict[i]
+            diff = 0
+            j = 0
+            while (j < len(oneWord)):
+                if (oneWord[j] != word[j]):
+                    diff += 1
+                    if (diff > 1):
+                        break
+                j += 1
+            if (diff == 1):
+                return True
+            i += 1
+        return False
+
+    # @param start, a string
+    # @param end, a string
+    # @param dict, a set of string
+    # @return an integer
+    def ladderLength_TLE(self, start, end, dict):
+        # write your code here
+        curDict = list([start])
+        dictList = list(dict)
+        dictList.append(end)
+        step = 1
+        while (len(dictList) > 0):
+            nextDict = list()
+            i = 0
+            while (i < len(dictList)):
+                word = dictList[i]
+                if (self.findWordInCurDict(curDict, word)):
+                    if (word == end):
+                        return step + 1
+                    del dictList[i]
+                    nextDict.append(word)
+                else:
+                    i += 1
+            curDict = nextDict
+            print('curDict: ', curDict)
+            if (len(curDict) == 0):
+                return 0
+            step += 1
+        return 0
+
+    def findWordInCurDict(self, curDict, word):
+        for oneWord in curDict:
+            diff = 0
+            j = 0
+            while (j < len(oneWord)):
+                if (oneWord[j] != word[j]):
+                    diff += 1
+                    if (diff > 1):
+                        break
+                j += 1
+            if (diff == 1):
+                return True
+        return False
+
+    def ladderLength(self, start, end, dict):
+        # write your code here
+        curDict = set([start])
+        # dict = set()
+        dict.add(end)
+        step = 1
+        while (len(dict) > 0):
+            nextDict = set()
+
+            for word in dict:
+                if (self.findWordInCurDict(curDict, word)):
+                    if (word == end):
+                        return step + 1
+                    # dict.remove(word)
+                    nextDict.add(word)
+            dict -= nextDict
+            curDict = nextDict
+            print('curDict: ', curDict)
+            if (len(curDict) == 0):
+                return 0
+            step += 1
+        return 0
