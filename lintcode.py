@@ -369,6 +369,22 @@ class SolutionReverseInteger:
 # Given a list of numbers, return all possible permutations.
 #  Notice
 # You can assume that there is no duplicate numbers in the list.
+# Example
+# For
+# nums = [1, 2, 3], the
+# permutations
+# are:
+# [
+#     [1, 2, 3],
+#     [1, 3, 2],
+#     [2, 1, 3],
+#     [2, 3, 1],
+#     [3, 1, 2],
+#     [3, 2, 1]
+# ]
+#
+#
+# TODO
 class SolutionPermutation:
     """
     @param nums: A list of Integers.
@@ -1899,6 +1915,7 @@ class SolutionUniqueBST:
 # Example
 # ["2", "1", "+", "3", "*"] -> ((2 + 1) * 3) -> 9
 # ["4", "13", "5", "/", "+"] -> (4 + (13 / 5)) -> 6
+# TODO
 class SolutionEvaluateReversePolishNotation:
     # @param {string[]} tokens The Reverse Polish Notation
     # @return {int} the value
@@ -2522,3 +2539,20 @@ class SolutionWordLadder:
                 return 0
             step += 1
         return 0
+
+# Spiral Matrix
+# Given a matrix of m x n elements (m rows, n columns), return all elements of the matrix in spiral order.
+# Example
+# Given the following matrix:
+# [
+#  [ 1, 2, 3 ],
+#  [ 4, 5, 6 ],
+#  [ 7, 8, 9 ]
+# ]
+# You should return [1,2,3,6,9,8,7,4,5].
+class SolutionSpiralMatrix:
+    # @param {int[][]} matrix a matrix of m x n elements
+    # @return {int[]} an integer array
+    def spiralOrder(self, matrix):
+        # Write your code here
+        pass
