@@ -2595,3 +2595,59 @@ class SolutionSpiralMatrix:
             row = newRow
             col = newCol
         return ret
+
+# Spiral Matrix II
+# Given an integer n, generate a square matrix filled with elements
+# from 1 to n^2 in spiral order.
+# Example
+# Given n = 3,
+# You should return the following matrix:
+# [
+#   [ 1, 2, 3 ],
+#   [ 8, 9, 4 ],
+#   [ 7, 6, 5 ]
+# ]
+class SolutionSprialMatrixII:
+    # @param {int} n an integer
+    # @return {int[][]} a square matrix
+    def generateMatrix(self, n):
+        if (n == 0):
+            return []
+        # Write your code here
+        ret = [ [0 for x in range(n)] for x in range(n)]
+        border = [n - 1, n - 1, 0, 1]
+        nextValue = [[0, 1], [1, 0], [0, -1], [-1, 0]]
+        borderIndex = 0
+        row = 0
+        col = 0
+        i = 1
+        while (True):
+            # print(ret, row, col, borderIndex)
+            ret[row][col] = i
+            if (i == n * n):
+                break;
+            i += 1
+            changeBorder = True
+            while (changeBorder):
+                changeBorder = False
+
+                rowDelta = nextValue[borderIndex][0]
+                newRow = row + rowDelta
+                if (rowDelta > 0):
+                    changeBorder = newRow > border[borderIndex]
+                elif (rowDelta < 0):
+                    changeBorder = newRow < border[borderIndex]
+
+                colDelta = nextValue[borderIndex][1]
+                newCol = col + colDelta
+                if (colDelta > 0):
+                    changeBorder = newCol > border[borderIndex]
+                elif (colDelta < 0):
+                    changeBorder = newCol < border[borderIndex]
+
+                if (changeBorder):
+                    border[borderIndex] -= (rowDelta + colDelta)
+                    borderIndex = (borderIndex + 1) % len(border)
+            row = newRow
+            col = newCol
+        return ret

@@ -795,5 +795,10 @@ print(SolutionSpiralMatrix().spiralOrder([[1]]))
 print(SolutionSpiralMatrix().spiralOrder([[1,2]]))
 print(SolutionSpiralMatrix().spiralOrder([[1],[2]]))
 print('\nEND')
+
+print('SolutionSprialMatrixII')
+print(SolutionSprialMatrixII().generateMatrix(3))
+print(SolutionSprialMatrixII().generateMatrix(0))
+print(SolutionSprialMatrixII().generateMatrix(1))
 ###########################################
 
