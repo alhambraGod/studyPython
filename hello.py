@@ -789,6 +789,11 @@ print(SolutionSpiralMatrix().spiralOrder([
  [ 4, 5, 6 ],
  [ 7, 8, 9 ]
 ]))
+
+print(SolutionSpiralMatrix().spiralOrder([]))
+print(SolutionSpiralMatrix().spiralOrder([[1]]))
+print(SolutionSpiralMatrix().spiralOrder([[1,2]]))
+print(SolutionSpiralMatrix().spiralOrder([[1],[2]]))
 print('\nEND')
 ###########################################
 

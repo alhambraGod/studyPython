@@ -2555,4 +2555,43 @@ class SolutionSpiralMatrix:
     # @return {int[]} an integer array
     def spiralOrder(self, matrix):
         # Write your code here
-        pass
+        if (len(matrix) == 0):
+            return list()
+        # right, bottom, left, top
+        retSize = len(matrix[0]) * len(matrix)
+        border = list([len(matrix[0]) - 1, len(matrix) - 1, 0, 1])
+        nextValue = [[0, 1], [1,0], [0,-1], [-1,0]]
+        borderIndex = 0
+        row = 0
+        col = 0
+        ret = list()
+        while (True):
+            # print(ret, row, col, borderIndex)
+            ret.append(matrix[row][col])
+            if (len(ret) == retSize):
+                break # traverse all elements
+
+            changeBorder = True
+            while (changeBorder):
+                changeBorder = False
+
+                rowDelta = nextValue[borderIndex][0]
+                newRow = row + rowDelta
+                if (rowDelta > 0):
+                    changeBorder = newRow > border[borderIndex]
+                elif  (rowDelta < 0):
+                    changeBorder = newRow < border[borderIndex]
+
+                colDelta = nextValue[borderIndex][1]
+                newCol = col + colDelta
+                if (colDelta > 0):
+                    changeBorder = newCol > border[borderIndex]
+                elif (colDelta < 0):
+                    changeBorder = newCol < border[borderIndex]
+
+                if (changeBorder):
+                    border[borderIndex] -= (rowDelta + colDelta)
+                    borderIndex = (borderIndex + 1) % len(border)
+            row = newRow
+            col = newCol
+        return ret
