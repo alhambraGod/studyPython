@@ -800,5 +800,11 @@ print('SolutionSprialMatrixII')
 print(SolutionSprialMatrixII().generateMatrix(3))
 print(SolutionSprialMatrixII().generateMatrix(0))
 print(SolutionSprialMatrixII().generateMatrix(1))
+
+print('SolutionGenerateParentthese')
+print(SolutionGenerateParentthese().generateParenthesis(0))
+print(SolutionGenerateParentthese().generateParenthesis(1))
+print(SolutionGenerateParentthese().generateParenthesis(3))
+print(SolutionGenerateParentthese().generateParenthesis(8))
 ###########################################
 

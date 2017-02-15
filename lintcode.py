@@ -2651,3 +2651,72 @@ class SolutionSprialMatrixII:
             row = newRow
             col = newCol
         return ret
+
+# Generate Parentheses
+# Given n pairs of parentheses, write a function to
+# generate all combinations of well-formed parentheses.
+# Example
+# Given n = 3, a solution set is:
+# "((()))", "(()())", "(())()", "()(())", "()()()"
+class SolutionGenerateParentthese_wrong:
+    # @param {int} n n pairs
+    # @return {string[]} All combinations of well-formed parentheses
+    def generateParenthesis(self, n):
+        # Write your code here
+        if (n <= 0):
+            return [""]
+        i = 1
+        ret = set(["()"])
+        while (i < n):
+            newRet = set([])
+            for str in ret:
+                newRet.add(str + "()")
+                newRet.add("()" + str)
+                newRet.add("(" + str + ")")
+            ret = newRet
+            i += 1
+        return list(ret)
+
+# solution: "((("
+#  r(i-1) <= r(i)
+#  i <= r(i) <= len
+# 0123: each time try to add last digit; when increase high position, all latter r(i) should be reset as max(r(i-1), i)
+class SolutionGenerateParentthese:
+    def generateOne(self, rightPos):
+        ret = '('
+        pos = 0 # 0 means after leftBracket#0
+        i = 0
+        while (i < len(rightPos)):
+            if (rightPos[i] == pos):
+                ret += ')'
+                i += 1
+            else:
+                pos += 1
+                ret += '('
+        return ret
+
+    # @param {int} n n pairs
+    # @return {string[]} All combinations of well-formed parentheses
+    def generateParenthesis(self, n):
+        # Write your code here
+        if (n <= 0):
+            return [""]
+        if (n == 1):
+            return ["()"]
+        rightPos = [x for x in range(n)]  # init as [0123]
+        ret = []
+        while (rightPos[0] < n):
+            # print(ret, rightPos)
+            ret.append(self.generateOne(rightPos))
+            # generate next right positions
+            i = n - 2 # last pos is always n - 1
+            while (i >= 0):
+                rightPos[i] += 1
+                if (rightPos[i] < n):
+                    j = i + 1     # last pos is always n - 1
+                    while (j < n - 1):
+                        rightPos[j] = max(rightPos[j - 1], j)
+                        j += 1
+                    break
+                i -= 1
+        return ret
