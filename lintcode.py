@@ -2720,3 +2720,45 @@ class SolutionGenerateParentthese:
                     break
                 i -= 1
         return ret
+
+# Linked List Cycle II
+# Given a linked list, return the node where the cycle begins.
+# If there is no cycle, return null.
+# Example
+# Given -21->10->4->5, tail connects to node index 1，return 10
+"""
+Definition of ListNode
+class ListNode(object):
+
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+"""
+# TODO
+class SolutionLinkedListCycleII:
+    """
+    @param head: The first node of the linked list.
+    @return: The node where the cycle begins.
+                if there is no cycle, return null
+    """
+    def detectCycle(self, head):
+        # write your code here
+        pass
+
+# Edit Distance
+# Given two words word1 and word2, find the minimum number of steps
+# required to convert word1 to word2. (each operation is counted as 1 step.)
+# You have the following 3 operations permitted on a word:
+# Insert a character
+# Delete a character
+# Replace a character
+# Example
+# Given
+# word1 = "mart" and word2 = "karma",
+# return 3.
+class SolutionEditDistance:
+    # @param word1 & word2: Two string.
+    # @return: The minimum number of steps.
+    def minDistance(self, word1, word2):
+        # write your code here
+        pass
