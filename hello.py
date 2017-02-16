@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
-###########################################
-######### input & output ##################
+# ###########################################
+# 类似__xxx__这样的变量是特殊变量，可以被直接引用，但是有特殊用途，比如上面的__author__，__name__就是特殊变量，hello模块定义的文档注释也可以用特殊变量__doc__访问，我们自己的变量一般不要用这种变量名；
+# 类似_xxx和__xxx这样的函数或变量就是非公开的（private），不应该被直接引用，比如_abc，__abc等；
+# 之所以我们说，private函数和变量“不应该”被直接引用，而不是“不能”被直接引用，是因为Python并没有一种方法可以完全限制访问private函数或变量，但是，从编程习惯上不应该引用private函数或变量。######### input & output ##################
 print('hello')
 print('I','am,','luke')
 print('I\'m "ok"')
@@ -282,9 +284,53 @@ else:
   print('hello: ', argv[1])
 
 from PIL import Image
-image = Image.open('1.png')
-image.thumbnail((200, 200))
-image.save('thumb.jpg', 'JPEG')
+# image = Image.open('1.png')
+# imageFileName = r'D:\install\python\study'
+# imageFileName = r'D:\install\python\study\1.png'
+imageFileName = r'D:\install\python\study\notexist.png'
+image = None
+try:
+    image = Image.open(imageFileName)
+except FileNotFoundError:
+    print('Fail to find the file: ', imageFileName)
+except PermissionError:
+    print('Permission error: ', imageFileName)
+except Exception:
+    print('Exception error: ', imageFileName)
+if (image != None):
+    image.thumbnail((200, 200))
+    image.save('thumb.jpg', 'JPEG')
+
+
+class A(object):
+    def __init__(self):
+        self.__private()
+        self.public()
+
+    def __private(self):
+        print('A.__private()')
+
+    def public(self):
+        print('A.public()')
+
+
+class B(A):
+    def __private(self):
+        print('B.__private()')
+
+    def public(self):
+        print('B.public()')
+
+print('=========================')
+a = A()  # 实例化对象a
+b = B()  # 实例化对象b
+# print(a.__private())  # 这里会报错,说 AttributeError: 'a' object has no attribute '__private'
+# print(b.__private())  # 这里会报错,说 AttributeError: 'B' object has no attribute '__private'
+# print
+b._A__private()  # 因为私有变量轧压机制,__private方法变成_A__private()
+print(dir(b))  # 通过自省方法dir(),查看b所具有的属性
+print('=========================')
+exit()
 ###########################################
 
 # for, isinstance
@@ -416,6 +462,45 @@ L = [('Bob', 75), ('Adam', 92), ('Bart', 66), ('Lisa', 88)]
 print(sorted(L, reverse = True))  # ?? how to sort?
 print(sorted(L, key = lambda x : x[0]))
 print(sorted(L, key = itemgetter(0)))
+
+
+# ======================================
+# closure
+print('closure test')
+def count():
+    funcArray= []
+    for i in range(1, 4):
+        def func():
+            return i * i
+        funcArray.append(func)
+    return funcArray
+
+funcArray = count()
+for func in funcArray:
+    print(func())
+
+def count2():
+    funcArray= []
+    for i in range(1, 4):
+        def func():
+            j = i
+            return j * j
+        funcArray.append(func)
+    return funcArray
+
+funcArray = count2()
+for func in funcArray:
+    print(func, func())
+
+import functools
+int2 = functools.partial(int, base = 2)
+print(int2('1011'))
+int16 = functools.partial(int, base = 16)
+print(int16('1AC'))
+print(int16('1001', base = 2))  # can still override 16 as 2
+max10 = functools.partial(max, 10)  # 10 is added to the end of parameter list
+print(max10(5, 6))
+print(max10(5, 6, 12))
 
 # ConvertUnixTime().convert([1340159970])
 # ConvertUnixTime().convert()
