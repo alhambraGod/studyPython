@@ -402,8 +402,13 @@ print('SolutionLinkedListCycleII')
 head = ListNode.listGenerator([0, 1, 2, 3, 4])
 head.next.next.next.next = head.next.next # 4 --> 2
 print(SolutionLinkedListCycleII().detectCycle(head))
+head = ListNode.listGenerator([0, 1, 2, 3, 4])
+print(SolutionLinkedListCycleII().detectCycle(head))
 
 print('SolutionEditDistance')
+print(SolutionEditDistance().minDistance('abc', 'kkabc'))
 print(SolutionEditDistance().minDistance('mart', 'karma'))
+print(SolutionEditDistance().minDistance("pneumonoultramicroscopicsilicovolcanoconiosis", "ultramicroscopically"))
+
 ###########################################
 

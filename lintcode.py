@@ -2734,7 +2734,6 @@ class ListNode(object):
         self.val = val
         self.next = next
 """
-# TODO
 class SolutionLinkedListCycleII:
     """
     @param head: The first node of the linked list.
@@ -2743,7 +2742,52 @@ class SolutionLinkedListCycleII:
     """
     def detectCycle(self, head):
         # write your code here
-        pass
+        fast = head
+        slow = head
+        while (True):
+            if (slow == None):
+                return None
+            slow = slow.next
+
+            if (fast == None):
+                return None
+            fast = fast.next
+            if (fast == None):
+                return None
+            fast = fast.next
+            if (slow == fast):
+                break  # find cycle
+        # a + b = L1, a is head
+        # c + b = L2, b&c is slow
+        L1 = 0
+        p = head
+        while (p != slow):
+            L1 += 1
+            p = p.next
+
+        L2 = 1
+        p = slow.next
+        while (p != slow):
+            L2 += 1
+            p = p.next
+
+        if (L1 > L2):
+            p1 = head
+            p2 = slow
+        else:
+            p1 = slow
+            p2 = head
+        # p1 move abs(L1 - L2) steps first
+        i = 0
+        while (i < abs(L1 - L2)):
+            p1 = p1.next
+            i += 1
+        # move at the same time
+        while (p1 != p2):
+            p1 = p1.next
+            p2 = p2.next
+        # print('find begin node: ', p1.val)
+        return p1
 
 # Edit Distance
 # Given two words word1 and word2, find the minimum number of steps
@@ -2756,12 +2800,81 @@ class SolutionLinkedListCycleII:
 # Given
 # word1 = "mart" and word2 = "karma",
 # return 3.
+# solution: for each char of word1, find same sub-string
+#               L1<same>R1
+#               R2<same>R2
+# optimize: for "ma", when search "m", we can note down "a"'s position to avoid re-calc
+# TODO:WRONG SOLUTION
 class SolutionEditDistance:
+    def calcDistance(self, word1, word2, i1, i2, currentMin):
+        diff = 0
+        # [start, end)
+        start = -1 * max(i1, i2)
+        end = max(len(word1) - i1, len(word2) - i2)
+        if (abs(i1 - i2) + abs((len(word1) - i1) - (len(word2) - i2)) >= currentMin):
+            return currentMin
+        i = start
+        while (i < end):
+            if (i + i1 < 0 or i + i1 >= len(word1)):
+                diff += 1
+                i += 1
+                continue
+            if (i + i2 < 0 or i + i2 >= len(word2)):
+                diff += 1
+                i += 1
+                continue
+            if (word1[i + i1] != word2[i + i2]):
+                diff += 1
+            i += 1
+        return diff
+
     # @param word1 & word2: Two string.
     # @return: The minimum number of steps.
     def minDistance(self, word1, word2):
         # write your code here
-        pass
+        ret = max(len(word1), len(word2))  # when no char is the same
+        i1 = 0
+        while (i1 < len(word1)):
+            i2 = 0
+            while (i2 < len(word2)):
+                if (word1[i1] == word2[i2]):
+                    distance = self.calcDistance(word1, word2, i1, i2, ret)
+                    # print(ret, distance, i1, i2)
+                    ret = min(ret, distance)
+
+                i2 += 1
+            i1 += 1
+        return ret
+
+# c++ solution
+# class Solution {
+# public:
+#     int minDistance(string word1, string word2) {
+#         // Start typing your C/C++ solution below
+#         // DO NOT write int main() function
+#         int row = word1.length() + 1;
+#         int col = word2.length() + 1;
+#
+#         vector<vector<int> > f(row, vector<int>(col));
+#
+#         for (int i = 0; i < row; i++)
+#             f[i][0] = i;
+#
+#         for (int i = 0; i < col; i++)
+#             f[0][i] = i;
+#
+#         for (int i = 1; i < row; i++)
+#             for (int j = 1; j < col; j++){
+#                 if (word1[i-1] == word2[j-1])
+#                     f[i][j] = f[i-1][j-1];
+#                 else
+#                     f[i][j] = f[i-1][j-1] + 1;
+#                 f[i][j] = min(f[i][j], min(f[i-1][j]+1, f[i][j-1]+1));
+#             }
+#
+#         return f[row-1][col-1];
+#     };
+# };
 
 # Longest Consecutive Sequence
 # Given an unsorted array of integers, find the length of
