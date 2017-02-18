@@ -505,3 +505,45 @@ print(max10(5, 6, 12))
 # ConvertUnixTime().convert([1340159970])
 # ConvertUnixTime().convert()
 # exit()
+
+######################################################
+# static class member
+class a():
+    num = 0
+
+obj1 = a()
+obj2 = a()
+print(obj1.num, obj2.num, a.num, obj1.num is obj2.num, obj1.num is a.num, obj2.num is a.num)
+
+obj1.num += 1
+print(obj1.num, obj2.num, a.num, obj1.num is obj2.num, obj1.num is a.num, obj2.num is a.num)
+
+a.num += 2
+print(obj1.num, obj2.num, a.num, obj1.num is obj2.num, obj1.num is a.num, obj2.num is a.num)
+
+obj2.num += 1
+print(obj1.num, obj2.num, a.num, obj1.num is obj2.num, obj1.num is a.num, obj2.num is a.num)
+
+# for a class member, after using self.member, will create a new instance other than class.member
+# 0 0 0 True True True
+# 1 0 0 False False True
+# 1 2 2 False False True
+# 1 3 2 False False False
+######################################################
+
+######################################################
+# default parameter value of function: only INIT ONCE
+def f(a, L=[]):
+    L.append(a)
+    return L
+print(f(1))
+print(f(2))
+print(f(3))
+print(f(4, ['x']))
+print(f(5))
+# [1]
+# [1, 2]
+# [1, 2, 3]
+# ['x', 4]
+# [1, 2, 3, 5]
+######################################################

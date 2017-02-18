@@ -1916,7 +1916,6 @@ class SolutionUniqueBST:
 # ["2", "1", "+", "3", "*"] -> ((2 + 1) * 3) -> 9
 # ["4", "13", "5", "/", "+"] -> (4 + (13 / 5)) -> 6
 # solution: use a stack
-# TODO
 class SolutionEvaluateReversePolishNotation:
     __OPERATORS = set(['+', '-', '*', '/'])
     def isOperator(self, ch):
