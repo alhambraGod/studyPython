@@ -1915,13 +1915,45 @@ class SolutionUniqueBST:
 # Example
 # ["2", "1", "+", "3", "*"] -> ((2 + 1) * 3) -> 9
 # ["4", "13", "5", "/", "+"] -> (4 + (13 / 5)) -> 6
+# solution: use a stack
 # TODO
 class SolutionEvaluateReversePolishNotation:
+    __OPERATORS = set(['+', '-', '*', '/'])
+    def isOperator(self, ch):
+        return ch in self.__OPERATORS
+
+    def calc(self, operator, op2, op1):
+        op2 = int(op2)
+        op1 = int(op1)
+        if (operator == '+'):
+            return op1 + op2
+        if (operator == '-'):
+            return op1 - op2
+        if (operator == '*'):
+            return op1 * op2
+        if (operator == '/'):
+            # NOTE: can not use op1 // op2
+            # if ((op1 * op2 < 0 ) and (abs(op1) < abs(op2))):
+            #     return 0
+            # see http://www.tuicool.com/articles/ry6fme
+            if (op1 * op2 < 0):
+                return -((-op1) / op2)
+            return op1 // op2
+
     # @param {string[]} tokens The Reverse Polish Notation
     # @return {int} the value
     def evalRPN(self, tokens):
         # Write your code here
-        pass
+        stack = []
+        i = 0
+        while (i < len(tokens)):
+            element = tokens[i]
+            if (self.isOperator(element)):
+                element = self.calc(tokens[i], stack.pop(-1), stack.pop(-1))
+                # print(element)
+            stack.append(element)
+            i += 1
+        return int(stack.pop(-1))
 
 # Search in Rotated Sorted Array
 # Suppose a sorted array is rotated at some pivot unknown to you beforehand.
