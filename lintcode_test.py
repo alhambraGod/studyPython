@@ -415,5 +415,14 @@ print(SolutionEditDistance().minDistance('abc', 'kkabc'))
 print(SolutionEditDistance().minDistance('mart', 'karma'))
 print(SolutionEditDistance().minDistance("pneumonoultramicroscopicsilicovolcanoconiosis", "ultramicroscopically"))
 
+print('SolutionFirstMissingPositive')
+print(SolutionFirstMissingPositive().firstMissingPositive([1,0,-1]))
+print(SolutionFirstMissingPositive().firstMissingPositive([1,2,0]))
+print(SolutionFirstMissingPositive().firstMissingPositive([3,4,-1,1]))
+print(SolutionFirstMissingPositive().firstMissingPositive([0,6,1,2,3,4]))
+print(SolutionFirstMissingPositive().firstMissingPositive([2,3,4,0,6]))
+print(SolutionFirstMissingPositive().firstMissingPositive([1,2,3,4,0,6]))
+print(SolutionFirstMissingPositive().firstMissingPositive([1,2,3,1,1]))
+print(SolutionFirstMissingPositive().firstMissingPositive([2,2,3,3]))
 ###########################################
 

@@ -2924,3 +2924,47 @@ class SolutionLongestConsecutiveSequence:
     def longestConsecutive(self, num):
         # write your code here
         pass
+#
+# First Missing Positive
+# Given an unsorted integer array, find the first missing positive integer.
+# Example
+# Given [1,2,0] return 3,
+# and [3,4,-1,1] return 2.
+# Challenge
+# Your algorithm should run in O(n) time and uses constant space.
+# solution: radix-sorting, [min, max] put in the array; n can be changed as remaining length
+#           init: min is 1 & max is len(A)
+#           when i <= min or i > n, skip and reduce length
+#           note: there may be dup numbers
+class SolutionFirstMissingPositive:
+    # @param A, a list of integers
+    # @return an integer
+    def firstMissingPositive(self, A):
+        # write your code here
+        if (len(A) == 0):
+            return 1
+        left = 0
+        right = len(A) - 1
+        lastInt = len(A)
+        while (left <= right):
+            num = A[left]
+            if ((num < (left + 1)) or (num > lastInt)):
+                A[left] = A[right] # skip A[left], swap and try A[right]
+                lastInt -= 1
+                right -= 1
+                continue
+            if (num == left + 1):
+                # good sorting
+                left += 1
+            else:
+                if (A[num - 1] == num):
+                    A[left] = A[right] # skip A[left], swap and try A[right]
+                    lastInt -= 1
+                    right -= 1
+                    continue
+                A[left] = A[num - 1] # next number to try
+                A[num - 1] = num     # radix sort: put in correct position
+        # print(A, left, right)
+        if (right < 0):  # 1 does not exist
+            return 1
+        return A[right] + 1
