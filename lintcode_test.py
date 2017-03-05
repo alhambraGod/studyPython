@@ -425,5 +425,15 @@ print(SolutionFirstMissingPositive().firstMissingPositive([2,3,4,0,6]))
 print(SolutionFirstMissingPositive().firstMissingPositive([1,2,3,4,0,6]))
 print(SolutionFirstMissingPositive().firstMissingPositive([1,2,3,1,1]))
 print(SolutionFirstMissingPositive().firstMissingPositive([2,2,3,3]))
+
+
+print('SolutionPalindromeLinkedList')
+print(SolutionPalindromeLinkedList().check(ListNode.listGenerator([])))
+print(SolutionPalindromeLinkedList().check(ListNode.listGenerator([1, 2, 1])))
+print(SolutionPalindromeLinkedList().check(ListNode.listGenerator([1, 2, 3])))
+print(SolutionPalindromeLinkedList().check(ListNode.listGenerator([1, 2, 2, 1])))
+print(SolutionPalindromeLinkedList().check(ListNode.listGenerator([1, 2, 3, 2, 1])))
+print(SolutionPalindromeLinkedList().check(ListNode.listGenerator([1, 2, 3, 3, 1])))
+print(SolutionPalindromeLinkedList().check(ListNode.listGenerator([1, 2, 3, 4, 3, 2, 1])))
 ###########################################
 

@@ -22,6 +22,8 @@ class ListNode:
         self.next = None
 
     def listGenerator(l):
+        if (len(l) == 0):
+            return None
         prev = head = ListNode(None)
         for value in l:
             prev.next = ListNode(value)
@@ -3004,3 +3006,44 @@ class SolutionFirstMissingPositive:
         if (right < 0):  # 1 does not exist
             return 1
         return A[right] + 1
+
+# Palindrome Linked List
+# Implement a function to check if a linked list is a palindrome.
+# Example
+# Given 1->2->1, return true
+# solution: find mid point of the list, break and revert first half
+class SolutionPalindromeLinkedList:
+    def check(self, head):
+        ret = False
+        length = 0
+        p = head
+        while (p != None):
+            length += 1
+            p = p.next
+        if (length == 0):
+            return False
+        if (length == 1):
+            return True
+
+        # revert first half
+        i = 0
+        p = None
+        c = head
+        n = c.next
+        while (i < length // 2):
+            c.next = p
+            p = c
+            c = n
+            n = n.next
+            i += 1
+        second = c
+        if (length % 2 == 1):
+            second = c.next
+
+        # compare first(p) and second
+        while (p != None):
+            if (p.val != second.val):
+                return False
+            p = p.next
+            second = second.next
+        return True
