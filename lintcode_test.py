@@ -64,8 +64,9 @@ print(SolutionReverseInteger().reverseInteger(123))
 print(SolutionReverseInteger().reverseInteger(-321))
 
 print('SolutionPermutation')
-# r = SolutionPermutation.permute()
-print(r, [1, 3, 2])
+print(SolutionPermutation().permute([2,8,7,3,5]))
+print(SolutionPermutation().permute([1,3,2]))
+# exit()
 
 print('SolutionSortColors')
 print(SolutionSortColors().sortColors([1, 0, 1, 2]))

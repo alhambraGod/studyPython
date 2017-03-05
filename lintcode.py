@@ -384,7 +384,6 @@ class SolutionReverseInteger:
 # ]
 #
 #
-# TODO
 class SolutionPermutation:
     """
     @param nums: A list of Integers.
@@ -392,7 +391,44 @@ class SolutionPermutation:
     """
     def permute(self, nums):
         # write your code here
-        pass
+        results = []
+        if (len(nums) == 0):
+            return results
+        nums = sorted(nums)
+        results.append(list(nums))
+        if (len(nums) == 1):
+            return results
+
+        i = len(nums) - 1
+        while (True):
+            if (i == 0):
+                break
+            if (nums[i - 1] < nums[i]):
+                # find in [index, len), a min mumber > nums[index - 1]
+                j = len(nums) - 1
+                while (nums[j] < nums[i - 1]):
+                    j -= 1
+                temp = nums[i - 1]
+                nums[i - 1] = nums[j]
+                nums[j] = temp
+                # asc sort [index, len), currently must be desc
+                # simply swap to do sorting
+                start = i
+                end = len(nums) - 1
+                while (start < end):
+                    temp = nums[start]
+                    nums[start] = nums[end]
+                    nums[end] = temp
+                    start += 1
+                    end -= 1
+
+                results.append(list(nums))
+                # print(list(nums))
+
+                i = len(nums) - 1  # reset index
+            else:
+                i -= 1
+        return results
 
 # Given an array with n objects colored red, white or blue, sort them so that objects of the same color are adjacent, with the colors in the order red, white and blue.
 # Here, we will use the integers 0, 1, and 2 to represent the color red, white, and blue respectively.
