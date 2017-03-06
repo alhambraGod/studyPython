@@ -70,7 +70,6 @@ print(SolutionPermutation().permute([1,3,2]))
 print('SolutionPermutationSequence')
 print(SolutionPermutationSequence().getPermutation(2, 1))
 print(SolutionPermutationSequence().getPermutation(3, 4))
-exit()
 
 print('SolutionSortColors')
 print(SolutionSortColors().sortColors([1, 0, 1, 2]))
@@ -419,6 +418,10 @@ print('SolutionEditDistance')
 print(SolutionEditDistance().minDistance('abc', 'kkabc'))
 print(SolutionEditDistance().minDistance('mart', 'karma'))
 print(SolutionEditDistance().minDistance("pneumonoultramicroscopicsilicovolcanoconiosis", "ultramicroscopically"))
+
+
+print('SolutionLongestConsecutiveSequence')
+print(SolutionLongestConsecutiveSequence().longestConsecutive([100, 4, 200, 1, 3, 2]))
 
 print('SolutionFirstMissingPositive')
 print(SolutionFirstMissingPositive().firstMissingPositive([1,0,-1]))

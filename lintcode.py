@@ -3022,15 +3022,35 @@ class SolutionEditDistance:
 # Example
 # Given [100, 4, 200, 1, 3, 2],
 # The longest consecutive elements sequence is [1, 2, 3, 4]. Return its length: 4.
-# TODO
+# solution: use a hash
 class SolutionLongestConsecutiveSequence:
+    def searchFlag(self, flag, n, incre):
+        ret = 0
+        while (True):
+            if (n in flag):
+                ret += 1
+                flag.remove(n)
+                n += incre
+            else:
+                break
+        return ret
+
     """
     @param num, a list of integer
     @return an integer
     """
     def longestConsecutive(self, num):
         # write your code here
-        pass
+        flag = set(num)
+        i = 0
+        ret = 0
+        while (i < len(num)):
+            asc = self.searchFlag(flag, num[i], 1)
+            desc = self.searchFlag(flag, num[i] - 1, -1)
+            if (asc + desc > ret):
+                ret = asc + desc
+            i += 1
+        return ret
 #
 # First Missing Positive
 # Given an unsorted integer array, find the first missing positive integer.
