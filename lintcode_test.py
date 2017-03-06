@@ -66,7 +66,11 @@ print(SolutionReverseInteger().reverseInteger(-321))
 print('SolutionPermutation')
 print(SolutionPermutation().permute([2,8,7,3,5]))
 print(SolutionPermutation().permute([1,3,2]))
-# exit()
+
+print('SolutionPermutationSequence')
+print(SolutionPermutationSequence().getPermutation(2, 1))
+print(SolutionPermutationSequence().getPermutation(3, 4))
+exit()
 
 print('SolutionSortColors')
 print(SolutionSortColors().sortColors([1, 0, 1, 2]))
@@ -428,12 +432,12 @@ print(SolutionFirstMissingPositive().firstMissingPositive([2,2,3,3]))
 
 
 print('SolutionPalindromeLinkedList')
-print(SolutionPalindromeLinkedList().check(ListNode.listGenerator([])))
-print(SolutionPalindromeLinkedList().check(ListNode.listGenerator([1, 2, 1])))
-print(SolutionPalindromeLinkedList().check(ListNode.listGenerator([1, 2, 3])))
-print(SolutionPalindromeLinkedList().check(ListNode.listGenerator([1, 2, 2, 1])))
-print(SolutionPalindromeLinkedList().check(ListNode.listGenerator([1, 2, 3, 2, 1])))
-print(SolutionPalindromeLinkedList().check(ListNode.listGenerator([1, 2, 3, 3, 1])))
-print(SolutionPalindromeLinkedList().check(ListNode.listGenerator([1, 2, 3, 4, 3, 2, 1])))
+print(SolutionPalindromeLinkedList().isPalindrome(ListNode.listGenerator([])))
+print(SolutionPalindromeLinkedList().isPalindrome(ListNode.listGenerator([1, 2, 1])))
+print(SolutionPalindromeLinkedList().isPalindrome(ListNode.listGenerator([1, 2, 3])))
+print(SolutionPalindromeLinkedList().isPalindrome(ListNode.listGenerator([1, 2, 2, 1])))
+print(SolutionPalindromeLinkedList().isPalindrome(ListNode.listGenerator([1, 2, 3, 2, 1])))
+print(SolutionPalindromeLinkedList().isPalindrome(ListNode.listGenerator([1, 2, 3, 3, 1])))
+print(SolutionPalindromeLinkedList().isPalindrome(ListNode.listGenerator([1, 2, 3, 4, 3, 2, 1])))
 ###########################################
 

@@ -395,6 +395,7 @@ class SolutionPermutation:
         # write your code here
         results = []
         if (len(nums) == 0):
+            results.append([])
             return results
         nums = sorted(nums)
         results.append(list(nums))
@@ -431,6 +432,74 @@ class SolutionPermutation:
             else:
                 i -= 1
         return results
+
+# Permutation Sequence
+# Given n and k, return the k-th permutation sequence.
+#  Notice
+# n will be between 1 and 9 inclusive.
+# Example
+# For n = 3, all permutations are listed as follows:
+# "123"
+# "132"
+# "213"
+# "231"
+# "312"
+# "321"
+# If k = 4, the fourth permutation is "231"
+class SolutionPermutationSequence:
+    def getString(self, n):
+        ret = ''
+        i = 0
+        while (i < len(n)):
+            ret += ('%d' % n[i])
+            i += 1
+        return ret
+
+    """
+    @param n: n
+    @param k: the k-th permutation
+    @return: a string, the k-th permutation
+    """
+    def getPermutation(self, n, k):
+        # write your code here
+        nums = [i + 1 for i in range(n)]
+        if (len(nums) == 0):
+            return ""
+        nums = sorted(nums)
+        if (k == 1):
+            return self.getString(nums)
+
+        counter = 1
+        i = len(nums) - 1
+        while (True):
+            if (i == 0):
+                break
+            if (nums[i - 1] < nums[i]):
+                # find in [index, len), a min mumber > nums[index - 1]
+                j = len(nums) - 1
+                while (nums[j] < nums[i - 1]):
+                    j -= 1
+                temp = nums[i - 1]
+                nums[i - 1] = nums[j]
+                nums[j] = temp
+                # asc sort [index, len), currently must be desc
+                # simply swap to do sorting
+                start = i
+                end = len(nums) - 1
+                while (start < end):
+                    temp = nums[start]
+                    nums[start] = nums[end]
+                    nums[end] = temp
+                    start += 1
+                    end -= 1
+
+                counter += 1
+                if (counter == k):
+                    return self.getString(nums)
+                i = len(nums) - 1  # reset index
+            else:
+                i -= 1
+        return ""
 
 # Given an array with n objects colored red, white or blue, sort them so that objects of the same color are adjacent, with the colors in the order red, white and blue.
 # Here, we will use the integers 0, 1, and 2 to represent the color red, white, and blue respectively.
@@ -3013,7 +3082,10 @@ class SolutionFirstMissingPositive:
 # Given 1->2->1, return true
 # solution: find mid point of the list, break and revert first half
 class SolutionPalindromeLinkedList:
-    def check(self, head):
+    # @param head, a ListNode
+    # @return a boolean
+    def isPalindrome(self, head):
+        # Write your code here
         ret = False
         length = 0
         p = head
@@ -3021,7 +3093,7 @@ class SolutionPalindromeLinkedList:
             length += 1
             p = p.next
         if (length == 0):
-            return False
+            return True
         if (length == 1):
             return True
 
