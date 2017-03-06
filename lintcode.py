@@ -3139,3 +3139,217 @@ class SolutionPalindromeLinkedList:
             p = p.next
             second = second.next
         return True
+
+# Number of Islands
+# Given a boolean 2D matrix, 0 is represented as the sea, 1 is represented as the island. If two 1 is adjacent, we consider them in the same island. We only consider up/down/left/right adjacent.
+# Find the number of islands.
+# Example
+# Given graph:
+# [
+#   [1, 1, 0, 0, 0],
+#   [0, 1, 0, 0, 1],
+#   [0, 0, 0, 1, 1],
+#   [0, 0, 0, 0, 0],
+#   [0, 0, 0, 0, 1]
+# ]
+# return 3.
+class SolutionNumberOfIslands_wrong:
+    def fillSameRow(self, grid, row, col, island):
+        j = col + 1
+        while (j < len(grid[row])):
+            if (grid[row][j] == 1):
+                grid[row][j] = island
+                j += 1
+            else:
+                break
+        j = col - 1
+        while (j >= 0):
+            if (grid[row][j] == 1):
+                grid[row][j] = island
+                j -= 1
+            else:
+                break
+
+    # return: True if filled; False if no fill
+    def fill(self, grid, row, island):
+        col = 0
+        ret = False
+        while (col < len(grid[row])):
+            if (grid[row][col] != 1):
+                col += 1
+                continue
+            # left
+            if (col - 1 >= 0 and grid[row][col - 1] == island):
+                grid[row][col] = island
+                col += 1
+                ret = True
+                continue
+            # top. row - 1 must > 0
+            if (grid[row - 1][col] == island):
+                grid[row][col] = island
+                col += 1
+                ret = True
+                continue
+            # right and right-top
+            ############### WRONG OCCURS HERE ######################
+            ############### SHOULD CHECK WHOLE LINE ################
+            if (col + 1 < len(grid[row]) and
+                grid[row - 1][col + 1] == island and
+                grid [row][col + 1] == 1):
+                grid[row][col] = island
+                grid[row][col + 1] = island
+                col += 2
+                ret = True
+                continue;
+            col += 1
+        return ret
+
+    def search(self, grid, row, col, island):
+        if (grid[row][col] != 1):
+            return False
+        grid[row][col] = island
+        self.fillSameRow(grid, row, col, island)
+        row += 1
+        while (row < len(grid)):
+            if (not self.fill(grid, row, island)):
+                break
+            row += 1
+        return True
+
+    # @param {boolean[][]} grid a boolean 2D matrix
+    # @return {int} an integer
+    def numIslands(self, grid):
+        # Write your code here
+        island = 2
+        row = 0
+        col = 0
+        while (row < len(grid)):
+            while (col < len(grid[row])):
+                if (self.search(grid, row, col, island)):
+                    island += 1
+                col += 1
+            col = 0
+            row += 1
+
+        i = 0
+        j = 0
+        while (i < len(grid)):
+            rowString = ""
+            while (j < len(grid[i])):
+                rowString += ', %-3d' % grid[i][j]
+                if (not self.check(grid, i, j)):
+                    print("error:", i, j)
+                j += 1
+            print(rowString)
+            j = 0
+            i += 1
+        print(grid)
+        return island - 2
+
+    def check(self, grid, row, col):
+        if (grid[row][col] == 0):
+            return True
+        if (row - 1 >= 0):
+            if (not (grid[row - 1][col] == 0 or grid[row - 1][col] == grid[row][col])):
+                return False
+        if (row + 1 < len(grid)):
+            if (not (grid[row + 1][col] == 0 or grid[row + 1][col] == grid[row][col])):
+                return False
+        if (col + 1 < len(grid[row])):
+            if (not (grid[row][col + 1] == 0 or grid[row][col + 1] == grid[row][col])):
+                return False
+        if (col - 1 >= 0):
+            if (not (grid[row][col - 1] == 0 or grid[row][col - 1] == grid[row][col])):
+                return False
+        return True
+
+class SolutionNumberOfIslands:
+    def fillRow(self, grid, row, col, island):
+        if (row + 1 < len(grid) and grid[row + 1][col] == 1):
+            grid[row + 1][col] = island
+            self.fillRow(grid, row + 1, col, island)
+        if (row - 1 >= 0 and grid[row - 1][col] == 1):
+            grid[row - 1][col] = island
+            self.fillRow(grid, row - 1, col, island)
+
+        j = col + 1
+        while (j < len(grid[row])):
+            if (grid[row][j] == 1):
+                grid[row][j] = island
+                if (row + 1 < len(grid) and grid[row + 1][j] == 1):
+                    grid[row + 1][j] = island
+                    self.fillRow(grid, row + 1, j, island)
+                if (row - 1 >= 0 and grid[row - 1][j] == 1):
+                    grid[row - 1][j] = island
+                    self.fillRow(grid, row - 1, j, island)
+                j += 1
+            else:
+                break
+        j = col - 1
+        while (j >= 0):
+            if (grid[row][j] == 1):
+                grid[row][j] = island
+                if (row + 1 < len(grid) and grid[row + 1][j] == 1):
+                    grid[row + 1][j] = island
+                    self.fillRow(grid, row + 1, j, island)
+                if (row - 1 >= 0 and grid[row - 1][j] == 1):
+                    grid[row - 1][j] = island
+                    self.fillRow(grid, row - 1, j, island)
+                j -= 1
+            else:
+                break
+
+    def search(self, grid, row, col, island):
+        if (grid[row][col] != 1):
+            return False
+        grid[row][col] = island
+        self.fillRow(grid, row, col, island)
+        return True
+
+    # @param {boolean[][]} grid a boolean 2D matrix
+    # @return {int} an integer
+    def numIslands(self, grid):
+        # Write your code here
+        island = 2
+        row = 0
+        col = 0
+        while (row < len(grid)):
+            while (col < len(grid[row])):
+                if (self.search(grid, row, col, island)):
+                    island += 1
+                col += 1
+            col = 0
+            row += 1
+
+        ############# code to verify result ###########################
+        i = 0
+        j = 0
+        while (i < len(grid)):
+            rowString = ""
+            while (j < len(grid[i])):
+                rowString += ', %-3d' % grid[i][j]
+                if (not self.check(grid, i, j)):
+                    print("error:", i, j)
+                j += 1
+            print(rowString)
+            j = 0
+            i += 1
+        print(grid)
+        return island - 2
+
+    def check(self, grid, row, col):
+        if (grid[row][col] == 0):
+            return True
+        if (row - 1 >= 0):
+            if (not (grid[row - 1][col] == 0 or grid[row - 1][col] == grid[row][col])):
+                return False
+        if (row + 1 < len(grid)):
+            if (not (grid[row + 1][col] == 0 or grid[row + 1][col] == grid[row][col])):
+                return False
+        if (col + 1 < len(grid[row])):
+            if (not (grid[row][col + 1] == 0 or grid[row][col + 1] == grid[row][col])):
+                return False
+        if (col - 1 >= 0):
+            if (not (grid[row][col - 1] == 0 or grid[row][col - 1] == grid[row][col])):
+                return False
+        return True
