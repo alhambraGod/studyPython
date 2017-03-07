@@ -391,12 +391,29 @@ for value in output_yanghui_triangle2():
     if value >= 10:
         break
 ###########################################
+print('test: now()')
 now()
+print('test: log(now)()')
 log(now)()
+print('test: log(log(now))()')
 log(log(now))()
+
+# print('test: log(print)()')
+# log(print('print called'))()
+# AttributeError: 'NoneType' object has no attribute '__name__'
+
+print("test: log(print)('called print')")
+log(print)('called print')
+
+print('test: log(print)()')
+log(print)()
+
+print('test: log(log(print))()')
 log(log(print))()
 
+print('test: print(log)')
 print(log)
+print('test: print(log(now))')
 print(log(now))
 
 log(log)(now)
@@ -546,4 +563,29 @@ print(f(5))
 # [1, 2, 3]
 # ['x', 4]
 # [1, 2, 3, 5]
+
+
+################# test bit operation ###################
+a = 9
+b = 3
+#    1001
+#      11
+# ^: 1010   4 bits
+# &:    1   4 bits
+# |: 1011   4 bits
+print(bin(a), bin(b))
+print(bin(a ^ b))
+print(bin(a & b))
+print(bin(a | b))
+
+def bit_add(a, b):
+    if (b == 0):
+        return a
+    sum = a ^ b
+    carry = (a & b) << 1
+    return bit_add(sum, carry)
+
+print(bit_add(int('1011', base = 2), 3))
+
+
 ######################################################
