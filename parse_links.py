@@ -94,7 +94,7 @@ def parse_web():
     soup = BeautifulSoup(urlopen('http://baidu.com'), 'lxml')
     soup = BeautifulSoup(urlopen('http://www.jb51.net/article/65287.htm'), 'lxml')
 
-    print(soup)
+    # print(soup)
     # result = list(x['href'] for x in soup.findAll('a'))
     result = list()
     for x in soup.findAll('a'):

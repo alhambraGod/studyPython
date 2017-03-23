@@ -519,10 +519,6 @@ max10 = functools.partial(max, 10)  # 10 is added to the end of parameter list
 print(max10(5, 6))
 print(max10(5, 6, 12))
 
-# ConvertUnixTime().convert([1340159970])
-# ConvertUnixTime().convert()
-# exit()
-
 ######################################################
 # static class member
 class a():
@@ -590,5 +586,55 @@ print(bit_add(int('1011', base = 2), 3))
 
 ######################################################
 
-from parse_links import  parse_links_test
-parse_links_test()
+import threading
+
+WAIT_INPUT = 8
+hasInput = False
+counter = 0
+
+def timer_exit():
+    while True:
+        global counter
+        time.sleep(1)
+        counter += 1
+        # print("counter： ", counter)
+        if (counter >= WAIT_INPUT) and (not hasInput):
+            print('NO INPUT. Exit')
+            # exit()  # only exit current thread
+            # threading.main_thread().exit()  # error code
+            from os import _exit
+            _exit(0)  # exit the process
+
+hasInput = False
+counter = 0
+threadExit = threading.Thread(target=timer_exit)
+threadExit.setDaemon(True)
+threadExit.start()
+
+while True:
+    hasInput = False
+    counter = 0
+
+    print('''
+    0  --- reset input timer
+    1  --- parse web links
+    2  --- convert unix time
+    ''')
+    item = input('Please select menu item (%ds):' % WAIT_INPUT)
+    item = int(item)
+
+    hasInput = True
+    if item == 0:
+        print('input to reset timer')
+    elif (item == 1):
+        from parse_links import parse_links_test
+        parse_links_test()
+    elif item == 2:
+        # convert UNIX time in excel file
+        ConvertUnixTime().convert([1340159970])
+        ConvertUnixTime().convert()
+    else:
+        exit()
+
+
+######################################################
