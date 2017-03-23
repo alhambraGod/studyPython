@@ -405,7 +405,7 @@ print('SolutionGenerateParentthese')
 print(SolutionGenerateParentthese().generateParenthesis(0))
 print(SolutionGenerateParentthese().generateParenthesis(1))
 print(SolutionGenerateParentthese().generateParenthesis(3))
-print(SolutionGenerateParentthese().generateParenthesis(8))
+print(SolutionGenerateParentthese().generateParenthesis(5))
 
 print('SolutionLinkedListCycleII')
 head = ListNode.listGenerator([0, 1, 2, 3, 4])

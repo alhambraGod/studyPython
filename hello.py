@@ -589,3 +589,6 @@ print(bit_add(int('1011', base = 2), 3))
 
 
 ######################################################
+
+from parse_links import  parse_links_test
+parse_links_test()

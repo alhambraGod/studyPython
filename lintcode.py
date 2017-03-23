@@ -407,7 +407,7 @@ class SolutionPermutation:
             if (i == 0):
                 break
             if (nums[i - 1] < nums[i]):
-                # find in [index, len), a min mumber > nums[index - 1]
+                # find in [index, len), a min number > nums[index - 1]
                 j = len(nums) - 1
                 while (nums[j] < nums[i - 1]):
                     j -= 1
@@ -2844,7 +2844,7 @@ class SolutionGenerateParentthese:
         rightPos = [x for x in range(n)]  # init as [0123]
         ret = []
         while (rightPos[0] < n):
-            # print(ret, rightPos)
+            print(rightPos)
             ret.append(self.generateOne(rightPos))
             # generate next right positions
             i = n - 2 # last pos is always n - 1
