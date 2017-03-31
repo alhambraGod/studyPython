@@ -1,5 +1,7 @@
 *.iml
+*.pyc
 .gradle
+.gitignore
 /local.properties
 /.idea/workspace.xml
 /.idea/libraries
@@ -17,3 +19,5 @@ settings.gradle
 .idea/workspace.xml
 __pycache__/function.cpython-35.pyc
 __pycache__/lintcode.cpython-35.pyc
+__pycache__/parse_links.cpython-35.pyc
+__pycache__/webBrowser.cpython-35.pyc
