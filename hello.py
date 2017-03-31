@@ -300,6 +300,7 @@ except Exception:
 if (image != None):
     image.thumbnail((200, 200))
     image.save('thumb.jpg', 'JPEG')
+    # image.rotate(45).show()
 
 
 class A(object):
@@ -583,6 +584,8 @@ def bit_add(a, b):
 
 print(bit_add(int('1011', base = 2), 3))
 
+t = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
+print('<h1>Hello, web! Time: %s</h1>' % t)
 
 ######################################################
 
@@ -619,8 +622,10 @@ while True:
     0  --- reset input timer
     1  --- parse web links
     2  --- convert unix time
+    3  --- web browser (mechanicalsoup)
     ''')
-    item = input('Please select menu item (%ds):' % WAIT_INPUT)
+    # item = input('Please select menu item (%ds):' % WAIT_INPUT)
+    item = 3
     item = int(item)
 
     hasInput = True
@@ -633,8 +638,12 @@ while True:
         # convert UNIX time in excel file
         ConvertUnixTime().convert([1340159970])
         ConvertUnixTime().convert()
+    elif item == 3:
+        from webBrowser import test_web_browser
+        test_web_browser()
     else:
         exit()
+    break
 
 
 ######################################################
