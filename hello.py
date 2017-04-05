@@ -656,7 +656,66 @@ l()  # still valid. only name of dog is invalid, "dog object" is still valid
 # s = getattr(dog, 'static_method')
 s = getattr(Dog, 'static_method')
 s()
+
+dog = Dog()
+dog.run()
+Dog.run(dog)
+Dog.__len__(dog)
+# Dog.len(dog)  # AttributeError: type object 'Dog' has no attribute 'len'
 print('########### END: types, static method, class method ###########')
+
+print('########### START: __slots__ ###########')
+class TestSlots(object):
+    pass
+
+t = TestSlots()
+t.name = 'snake'
+print(t.name)
+from types import MethodType
+def bind_method(self, n):
+    print('bind_method: ', n)
+    self.name = 'bind'
+
+bind_method(t, 100)
+t.bind = MethodType(bind_method, t)
+t.bind(200)
+print('t.name', t.name)
+t2 = TestSlots()
+# binded method not valid for other object instances
+# t2.bind() # AttributeError: 'TestSlots' object has no attribute 'bind'
+# should bind to the class, then all instances have the binded method
+TestSlots.bind = bind_method
+t.bind(500)
+t2.bind(600)
+
+class TestSlots():
+    # limit the members
+    __slots__ = ('name', 'age')
+    pass
+
+t = TestSlots()
+t.name = 'luke'
+print(t.name)
+# ERROR: __slots__ does not includ score
+# AttributeError: 'TestSlots' object has no attribute 'score'
+# t.score = 300
+# print(t.score)
+# ERROR: object can not bind method, either
+# t.bind = MethodType(bind_method, t)
+# t.bind()
+# GOOD: __slots__ only limits object instance's members, not class
+TestSlots.score = 'score'
+print(t.score)
+
+# child class is not limited by parent class' __slots__
+class TestSlotsChild(TestSlots):
+    pass
+
+tchild = TestSlotsChild()
+tchild.score = 300
+print(tchild.score)
+
+print('########### END: __slots__ ###########')
 
 ######################################################
 
