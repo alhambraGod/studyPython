@@ -587,6 +587,77 @@ print(bit_add(int('1011', base = 2), 3))
 t = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
 print('<h1>Hello, web! Time: %s</h1>' % t)
 
+print('########### types, static method, class method ###########')
+import types
+def fn():
+    pass
+
+print(type(fn))
+print(type(fn)==types.FunctionType)
+print(type(abs)==types.BuiltinFunctionType)
+print(type(abs)==types.BuiltinMethodType)
+print(type(lambda x : x)==types.LambdaType)
+print(type(x for x in range(10))==types.GeneratorType)
+print(dir(types))
+print(dir(time))
+class Animal:
+    def run(self):
+        print('Animal run...')
+
+class Dog(Animal):
+    def run(self):
+        print('Dog run...')
+    def __len__(self):
+        print("Dog's len is 100")
+        return 100
+
+    @classmethod
+    def class_method(cls):
+        print('class_method: ', cls)
+
+    @staticmethod
+    def static_method():
+        print('static_method')
+
+class DuckType:  # duck type, not child class of Animal
+    def run(self):
+        print('DuckType run...')
+
+def test_duck_type(duck):
+    duck.run()
+
+test_duck_type(Animal())
+test_duck_type(Dog())
+test_duck_type(DuckType())
+print('isinstance(Dog, Animal): ', isinstance(Dog, Animal))
+print('isinstance(Dog(), Animal()): ', isinstance(Dog(), Animal))
+print('isinstance(DuckType, Animal): ', isinstance(DuckType(), Animal))
+print('len(Dog()): ', len(Dog()))
+dog = Dog()
+print('Dog.class_method(): ', Dog.class_method())
+print('dog.class_method(): ', dog.class_method())
+print('Dog.static_method(): ', Dog.static_method())
+print('dog.static_method(): ', dog.static_method())
+print(hasattr(Dog, '__init__'))
+print(hasattr(Dog, 'run'))
+print(hasattr(Dog, '__len__'))
+print(hasattr(Dog, 'class_method'))
+print(hasattr(Dog, 'static_method'))
+print(hasattr(dog, '__init__'))
+print(hasattr(dog, 'run'))
+print(hasattr(dog, '__len__'))
+print(hasattr(dog, 'class_method'))
+print(hasattr(dog, 'static_method'))
+l = getattr(dog, '__len__')
+l()
+del dog
+l()  # still valid. only name of dog is invalid, "dog object" is still valid
+# error when run following line: NameError: name 'dog' is not defined
+# s = getattr(dog, 'static_method')
+s = getattr(Dog, 'static_method')
+s()
+print('########### END: types, static method, class method ###########')
+
 ######################################################
 
 import threading
