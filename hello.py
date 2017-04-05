@@ -717,6 +717,48 @@ print(tchild.score)
 
 print('########### END: __slots__ ###########')
 
+print('########### START: @property ###########')
+class TestProperty():
+    @property
+    def score(self):
+        return self._score
+
+    # @property # AttributeError: can't set attribute
+    @score.setter
+    def score(self, s):
+        if (not isinstance(s, int)):
+            raise ValueError('Must be integer')
+        if (s < 0 or s > 100):
+            raise ValueError('Must be [0, 100]')
+        self._score = s
+
+    def __init__(self, v):
+        self._age = v
+
+    # read-only property, not proper.setter
+    @property
+    def age(self):
+        return self._age
+
+t = TestProperty(66)
+print(t.age)
+try:
+    t.score = 50
+    print(t.score)
+    t.score = -1
+except ValueError as e:
+    print('Caught error: ', e)
+
+try:
+    t.score = 50
+    print(t.score)
+    t.score = 200
+    print(t.score)
+except ValueError as e:
+    print('Caught error: ', e)
+
+print('########### END: @property ###########')
+
 ######################################################
 
 import threading
