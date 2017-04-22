@@ -3353,3 +3353,327 @@ class SolutionNumberOfIslands:
             if (not (grid[row][col - 1] == 0 or grid[row][col - 1] == grid[row][col])):
                 return False
         return True
+
+"""
+Definition of ListNode
+class ListNode(object):
+
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+"""
+class SolutionHasCycle:
+    """
+    @param head: The first node of the linked list.
+    @return: True if it has a cycle, or false
+    """
+    def hasCycle(self, head):
+        # write your code here
+        if (head == None):
+            return False
+        fast = head
+        slow = head
+        while (True):
+            fast = fast.next
+            if (fast == None):
+                return False
+            fast = fast.next
+            if (fast == None):
+                return False
+            slow = slow.next
+            if (slow == fast):
+                return True
+
+
+# Example
+# Given a binary tree as follow:
+#   1
+#  / \
+# 2   3
+#    / \
+#   4   5
+# The maximum depth is 3.
+"""
+Definition of TreeNode:
+class TreeNode:
+    def __init__(self, val):
+        self.val = val
+        self.left, self.right = None, None
+"""
+class SolutionMaxDepth:
+    def __init__(self):
+        self.maxRet = 0
+
+    def traverse(self, root, depth):
+        depth += 1
+        if (depth > self.maxRet):
+            self.maxRet = depth
+        if (root.left != None):
+            self.traverse(root.left, depth)
+        if (root.right != None):
+            self.traverse(root.right, depth)
+    """
+    @param root: The root of binary tree.
+    @return: An integer
+    """
+    def maxDepth1(self, root):
+        # write your code here
+        if (root == None):
+            return 0
+        self.traverse(root, 0)
+        return self.maxRet
+
+    def maxDepth(self, root):
+        if root == None:
+            return 0
+        return 1 + max(self.maxDepth(root.left), self.maxDepth(root.right))
+
+# Reverse Words in a String
+# Given an input string, reverse the string word by word.
+# For example,
+# Given s = "the sky is blue",
+# return "blue is sky the".
+# Clarification
+# What constitutes a word?
+# A sequence of non-space characters constitutes a word.
+# Could the input string contain leading or trailing spaces?
+# Yes. However, your reversed string should not contain leading or trailing spaces.
+# How about multiple spaces between two words?
+# Reduce them to a single space in the reversed string.
+class SolutionReverseWordsInAString:
+    def firstPos(self, s, start, isFindSpace):
+        i = start
+        while (i < len(s)):
+            if (isFindSpace and (s[i] == ' ')):
+                return i
+            if ((not isFindSpace) and (s[i] != ' ')):
+                return i
+            i += 1
+        return -1  # not found
+
+    # @param s : A string
+    # @return : A string
+    def reverseWords(self, s):
+        # write your code here
+        ret = ''
+        i = 0
+        l = len(s)
+        while (i < l):
+            start = self.firstPos(s, i, False)
+            # print('start: ', start)
+            if (start == -1):
+                break
+            end = self.firstPos(s, start + 1, True)
+            # print('end: ', end)
+            if (end == -1):
+                end = len(s)  # final word
+            # append the word to the head
+            # print('sub: ', s[start : (end - start)])
+            if (len(ret) == 0):
+                ret = s[start : end] + ret
+            else:
+                ret = s[start : end] + ' ' + ret
+            i = end + 1
+        return ret
+
+
+# Valid Sudoku
+# Determine whether a Sudoku is valid.
+# The Sudoku board could be partially filled,
+# where empty cells are filled with the character ..
+#  Notice
+# A valid Sudoku board (partially filled) is not necessarily solvable.
+# Only the filled cells need to be validated.
+class SolutionValidSudoku:
+    def checkRow(self, board, x, y, rows):
+        # check rows
+        i = x
+        flag = [0 for v in range(9)]  # reset flag
+        while (i < x + rows):
+            row = board[i]
+            j = y
+            while (j < y + rows):
+                # print('%d, %d' % (i, j))
+                if (row[j] != '.'):
+                    # check flag
+                    # print(str(row[j]), ' - ', int(row[j]))
+                    if (flag[int(row[j]) - 1] != 0):
+                        return False
+                    # set flag
+                    flag[int(row[j]) - 1] = 1
+                j += 1
+            i += 1
+            if (rows > 3):
+                flag = [0 for v in range(9)]  # reset flag
+            # else:
+            #     print(flag)
+        # print(flag)
+        return True
+
+    # @param board, a 9x9 2D array
+    # @return a boolean
+    def isValidSudoku(self, board):
+        flag = [0 for x in range(9)]
+
+        # print(len(board), ', ', len(board[0]))
+        # check rows
+        if (not self.checkRow(board, 0, 0, 9)):
+            return False
+        x = 0
+        y = 0
+        while (x <= 2):
+            if (not self.checkRow(board, x, y, 3)):
+                return False
+            y = (y + 3)
+            if (y > 6):
+                y = 0
+                x += 1
+
+        # i = 0
+        # while (i < len(board)):
+        #     flag = [0 for x in range(9)] # reset flag
+        #     row = board[i]
+        #     j = 0
+        #     while (j < len(row)):
+        #         # print('%d, %d' % (i, j))
+        #         if (row[j] != '.'):
+        #             # check flag
+        #             # print(str(row[j]), ' - ', int(row[j]))
+        #             if (flag[int(row[j]) - 1] != 0):
+        #                 return False
+        #             # set flag
+        #             flag[int(row[j]) - 1] = 1
+        #         j += 1
+        #     i += 1
+
+        # check columns
+        i = 0
+        while (i < len(board[0])):
+            flag = [0 for x in range(9)] # reset flag
+            j = 0
+            while (j < len(board[0])):
+                if (board[j][i] != '.'):
+                    # check flag
+                    if (flag[int(board[j][i]) - 1] != 0):
+                        return False
+                    # set flag
+                    flag[int(board[j][i]) - 1] = 1
+                j += 1
+            i += 1
+
+        # check grid
+        return True
+
+# Decode Ways
+# A message containing letters from A-Z is being encoded to numbers using the following mapping:
+# 'A' -> 1
+# 'B' -> 2
+# ...
+# 'Z' -> 26
+# Given an encoded message containing digits, determine the total number of ways to decode it.
+# Example
+# Given encoded message 12, it could be decoded as AB (1 2) or L (12).
+# The number of ways decoding 12 is 2.
+# solution:
+# DP: ret(n) = ret(n-1) + x
+#     x: 0,        if [n-2][n-1] can not be decoded
+#     x: ret(n-2), if [n-2][n-1] can be decoded
+class SolutionDecodeWays:
+    def canDecode(self, s, i):
+        if (s[i - 1] == '0'):
+            return False
+        temp = int(s[i - 1]) * 10 + int(s[i])
+        return (1 <= temp and temp <= 26)
+
+    def getNum(self, s, i, n2, n1):
+        if (self.canDecode(s, i)):
+            if (s[i] != '0'):
+                return n2 + n1
+            else:
+                return n2
+        else:
+            if (s[i] != '0'):
+                return n1
+            else:
+                return 0
+
+    # @param {string} s a string,  encoded message
+    # @return {int} an integer, the number of ways decoding
+    def numDecodings(self, s):
+        # Write your code here
+        if (len(s) == 0):
+            return 0
+        if (s[0] != '0'):
+            n2 = 1
+        else:
+            n2 = 0
+        if (len(s) == 1 or n2 == 0):
+            return n2
+
+        if (self.canDecode(s, 1)):
+            if (s[1] != '0'):
+                n1 = 2
+            else:
+                n1 = 1
+        else:
+            if (s[1] != '0'):
+                n1 = 1
+            else:
+                return 0
+        if (len(s) == 2):
+            return n1
+
+        i = 2
+        while (i < len(s)):
+            ret = self.getNum(s, i, n2, n1)
+            if (ret == 0):
+                return 0
+            n2 = n1
+            n1 = ret
+            i += 1
+        return ret
+
+class SolutionDecodeWays_2:
+    # @param {string} s a string,  encoded message
+    # @return {int} an integer, the number of ways decoding
+    def canDecode(self, s, i):
+        if (s[i - 1] == '0'):
+            return False
+        temp = int(s[i - 1]) * 10 + int(s[i])
+        return (1 <= temp and temp <= 26)
+
+    def getNum(self, s, i, n2, n1):
+        if (i < 0):
+            return 0
+        if (i == 0):
+            if (s[i] == '0'):
+                return 0
+            else:
+                return 1
+
+        ret = 0
+        if (s[i] != '0'):
+            ret += n1
+        if (self.canDecode(s, i)):
+            if (n2 == 0):
+                ret += 1
+            else:
+                ret += max(n2, 1)
+        return ret
+
+    # @param {string} s a string,  encoded message
+    # @return {int} an integer, the number of ways decoding
+    def numDecodings(self, s):
+        # Write your code here
+        ret = 0
+        n2 = 0
+        n1 = 0
+        i = 0
+        while (i < len(s)):
+            ret = self.getNum(s, i, n2, n1)
+            if (ret == 0):
+                return 0
+            n2 = n1
+            n1 = ret
+            i += 1
+        return ret

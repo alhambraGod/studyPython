@@ -509,5 +509,54 @@ print(SolutionNumberOfIslands().numIslands([
     [1,0,0,0,1,0,1,1,1,0,0,1,0,1,0,1,1,0,0,0]
 ]
 ))
+
+print('SolutionHasCycle')
+head = ListNode.listGenerator([-21, 10, 4, 5])
+head0 = head
+head1 = head0.next
+head2 = head1.next
+head3 = head2.next
+head3.next = head1
+print(SolutionHasCycle().hasCycle(head))
+head = ListNode.listGenerator([-21, 10, 4, 5])
+head0 = head
+head1 = head0.next
+head2 = head1.next
+head3 = head2.next
+#head3.next = head1
+print(SolutionHasCycle().hasCycle(head))
+
+
+t = TreeNode.treeGenerator([1,2,3,4,5])
+t[0].left = t[1]
+t[0].right = t[2]
+t[2].left = t[3]
+t[2].right = t[4]
+print('SolutionMaxDepth')
+print(SolutionMaxDepth().maxDepth(t[0]))
+print(SolutionMaxDepth().maxDepth(None))
+
+print('SolutionReverseWordsInAString')
+print(SolutionReverseWordsInAString().reverseWords('the sky is blue'))
+
+print('SolutionValidSudoku')
+print(SolutionValidSudoku().isValidSudoku([".87654321","2........","3........","4........","5........","6........","7........","8........","9........"]
+))
+
+print(SolutionValidSudoku().isValidSudoku(["....5..1.",".4.3.....",".....3..1","8......2.","..2.7....",".15......",".....2...",".2.9.....","..4......"]
+))
+
+print('SolutionDecodeWays')
+print(SolutionDecodeWays().numDecodings('102'))
+print(SolutionDecodeWays().numDecodings('100'))
+print(SolutionDecodeWays().numDecodings('19261001'))
+print(SolutionDecodeWays().numDecodings('11111878787676172120121101212918291829819'))
+print(SolutionDecodeWays().numDecodings('11'))
+print(SolutionDecodeWays().numDecodings('1110'))
+print(SolutionDecodeWays().numDecodings('10'))
+print(SolutionDecodeWays().numDecodings('12'))
+print(SolutionDecodeWays().numDecodings('123'))
+print(SolutionDecodeWays().numDecodings('11222'))
+print(SolutionDecodeWays().numDecodings('11222121'))
 ###########################################
 
