@@ -3677,3 +3677,45 @@ class SolutionDecodeWays_2:
             n1 = ret
             i += 1
         return ret
+
+# Binary Tree Maximum Path Sum
+# Given a binary tree, find the maximum path sum.
+# The path may start and end at any node in the tree.
+# Example
+# Given the below binary tree:
+#   1
+#  / \
+# 2   3
+# return 6.
+
+"""
+Definition of TreeNode:
+class TreeNode:
+    def __init__(self, val):
+        self.val = val
+        self.left, self.right = None, None
+"""
+class SolutionBinaryTreeMaximumPathSum:
+    def __init__(self):
+        self.maxKnownPathSum = -2147483648
+
+    def recursiveCalc(self, root):
+        if (root == None):
+            return 0
+        pathLeft = self.recursiveCalc(root.left)
+        pathRight = self.recursiveCalc(root.right)
+        maxKnownPathSum = pathLeft + root.val + pathRight
+        self.maxKnownPathSum = max(
+            self.maxKnownPathSum,
+            maxKnownPathSum,
+            root.val)
+        return max(pathLeft, pathRight) + root.val
+
+    """
+    @param root: The root of binary tree.
+    @return: An integer
+    """
+    def maxPathSum(self, root):
+        # write your code here
+        ret = self.recursiveCalc(root)
+        return max(ret, self.maxKnownPathSum)

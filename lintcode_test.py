@@ -558,5 +558,44 @@ print(SolutionDecodeWays().numDecodings('12'))
 print(SolutionDecodeWays().numDecodings('123'))
 print(SolutionDecodeWays().numDecodings('11222'))
 print(SolutionDecodeWays().numDecodings('11222121'))
+
+print('SolutionBinaryTreeMaximumPathSum')
+# Given the below binary tree:
+#   1
+#  / \
+# 2   3
+# return 6.
+t = TreeNode.treeGenerator([1,2,3])
+t[0].left = t[1]
+t[0].right = t[2]
+print(SolutionBinaryTreeMaximumPathSum().maxPathSum(t[0]))
+
+# Given the below binary tree:
+#   2
+#  / \
+# 4   3
+#    / \
+#   5   1
+# return 14.
+t = TreeNode.treeGenerator([2,4,3,5,1])
+t[0].left = t[1]
+t[0].right = t[2]
+t[2].left = t[3]
+t[2].right = t[4]
+print(SolutionBinaryTreeMaximumPathSum().maxPathSum(t[0]))
+
+
+# {-10,-20,#,#,-31,-24,-5,#,#,-6,-7,-8,-9}
+t = TreeNode.treeGenerator([-10,-20,-31,-24,-5,-6,-7,-8,-9])
+#                            0   1   2   3   4  5  6  7  8
+t[0].left = t[1]
+t[1].right = t[2]
+t[2].left = t[3]
+t[2].right = t[4]
+t[4].left = t[5]
+t[4].right = t[6]
+t[5].left = t[7]
+t[5].left = t[8]
+print(SolutionBinaryTreeMaximumPathSum().maxPathSum(t[0]))
 ###########################################
 
