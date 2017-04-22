@@ -759,6 +759,164 @@ except ValueError as e:
 
 print('########### END: @property ###########')
 
+print('########### START: customized class:  ###########')
+# http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014319098638265527beb24f7840aa97de564ccc7f20f6000
+class Chain():
+    def __init__(self, path = ''):
+        self.path = 'luke'
+        if (path != ''):
+            self.path = path
+
+    def __getattr__(self, path):
+        return Chain('%s/%s' % (self.path, path))
+    def __str__(self):
+        return self.path
+
+    def __call__(self, *args, **kwargs):
+        print('Call self. path: %s' % self.path)
+    __repr__ = __str__
+
+# simulate restful API calls
+print(Chain().user.status.list)
+c = Chain()
+c()  # use class object as function
+print('callable(c): ', callable(c))
+print('callable(Chain): ', callable(Chain))
+print('########### END: customized class:  ###########')
+
+print('########### START: enum ###########')
+from enum import Enum, unique
+Month = Enum('Month', ('Jan', 'Feb', 'Mar'))
+for name, member in Month.__members__.items():
+    print(name, ' -> ', member, ', ', member.value)
+
+@unique
+class Weekday(Enum):
+    Sun = 0
+    Mon = 1
+    Tue = 2
+    Wed = 3
+    Thu = 8
+    Fri = 9
+    Sat = 5
+    # Sat = 10  # with @unique, TypeError: Attempted to reuse key: 'Sat'
+
+day1 = Weekday.Sat
+print(day1)
+print(day1.Mon)
+print(day1.value)
+print(Weekday['Tue'])
+print(Weekday.Tue)
+print(Weekday(8)) # Thu
+print(day1 == Weekday(5))
+for name, member in Weekday.__members__.items():
+    print(name, ' -> ', member, ', ', member.value)
+print('########### END: enum ###########')
+
+print('########### START: meta class ###########')
+def meta_fn(self, name = 'world'):
+    print('hello, ', name)
+
+# Hello = type('Hello', (object, ), dict(hello = meta_fn))
+# TypeError: 'dict' object is not callable
+Hello = type('Hello', (object, ), {'hello':meta_fn})
+h = Hello()
+h.hello()
+
+class ListMetaclass(type):
+    def __new__(cls, name, bases, attrs):
+        attrs['add'] = lambda self, value: self.append(value)
+        return type.__new__(cls, name, bases, attrs)
+
+class MyList(list, metaclass=ListMetaclass):
+    pass
+l = MyList()
+l.add(1)
+l.add(5)
+print(l)
+
+class MyListBase:
+    def add(self, value):
+        self.append(value)
+
+class MyList(list, MyListBase):
+    pass
+l = MyList()
+l.add(1)
+l.add(5)
+print(l)
+
+print('########### END: meta class  ###########')
+
+print('########### START: exception, assert ###########')
+import logging
+# note:
+# logging.basicConfig(level=logging.INFO)
+# debug，info，warning，error
+
+class FooError(ValueError):
+    pass
+
+try:
+    raise FooError(5)
+except BaseException as e:
+    print(e)
+    logging.exception(e)
+finally:
+    print('finally of exception')
+
+import pdb
+############################################
+# 1)following code will auto pause when run with
+#   'python hello.py'
+# 2) python -m pdb hello.py
+# pdb commands: l (list code), n (step over), p (see variable), q (quit)
+# pdb.set_trace()
+
+print('test assert')
+try:
+    print("assert((1 < 0), 'assertion: 1 < 0')")
+    # following code NO assertion failure:
+    # actually assert a tuple
+    assert((1 < 0), 'assertion: 1 < 0')
+
+    print("assert  1 < 0, 'assertion: 1 < 0'")
+    assert  1 < 0, 'assertion: 1 < 0'
+except BaseException as e:
+    print(e)
+finally:
+    print('finally of exception')
+
+print('########### END: exception, assert ###########')
+
+print('########### START: file I/O ###########')
+print('test: file IO')
+with open('./elsie.html') as f:
+    lines = f.readlines()
+i = 0
+while (i < len(lines)):
+    if ((i % 2) == 0):
+        print(lines[i].strip())
+    # print(lines[i])
+    i += 1
+
+from io import StringIO, BytesIO, SEEK_SET, SEEK_END
+print('test: StringIO')
+f = StringIO('start')
+print(f.getvalue())
+print(f.tell())
+f.seek(SEEK_END)
+print(f.tell())
+f.write('hello\n')
+f.writelines(['line1', 'line2', 'end'])
+print(f.getvalue())
+
+f.seek(SEEK_SET)
+lines = f.readlines()
+print(lines)
+
+
+print('########### END: file I/O ###########')
 ######################################################
 
 import threading
