@@ -3719,3 +3719,71 @@ class SolutionBinaryTreeMaximumPathSum:
         # write your code here
         ret = self.recursiveCalc(root)
         return max(ret, self.maxKnownPathSum)
+
+
+# Minimum Path Sum
+# Given a m x n grid filled with non-negative numbers,
+# find a path from top left to bottom right which minimizes the sum of all numbers along its path.
+#  Notice
+# You can only move either down or right at any point in time.
+# TLE solution, O(2^(M*N))
+class SolutionMinimumPathSum_TLE:
+    def recursiveGetMinPath(self, grid, row, col):
+        # if ((row == len(grid) - 1) and (col == len(grid[0]) - 1)):
+        #     return grid[row][col]
+        # go down
+        down = 2147483647
+        if ((row + 1 <= len(grid) - 1)):
+            down = self.recursiveGetMinPath(grid, row + 1, col)
+        right = 2147483647
+        if ((col + 1 < len(grid[0]))):
+            right = self.recursiveGetMinPath(grid, row, col + 1)
+        if (down == 2147483647 and right == 2147483647):
+            ret = grid[row][col]
+        else:
+            ret = min(right, down) + grid[row][col]
+        # print("[%d,%d] - %d, [%d, %d]" % (row, col, ret, right, down))
+        return ret
+
+    """
+    @param grid: a list of lists of integers.
+    @return: An integer, minimizes the sum of all numbers along its path
+    """
+    def minPathSum(self, grid):
+        # write your code here
+        if (grid == None or len(grid) == 0):
+            return 0
+        return self.recursiveGetMinPath(grid, 0, 0)
+
+# DP
+# path_matrix[i,j] =
+# min(path_matrix[i, j - 1], path_matrix[i - 1, j]) + grid[i,j]
+class SolutionMinimumPathSum:
+    """
+    @param grid: a list of lists of integers.
+    @return: An integer, minimizes the sum of all numbers along its path
+    """
+    def minPathSum(self, grid):
+        # write your code here
+        if (grid == None or len(grid) == 0):
+            return 0
+        matrix = [[0 for col in range(len(grid[0]))] for row in range(len(grid))]
+        matrix[0][0] = grid[0][0]
+        row = 1
+        while (row < len(grid)):
+            matrix[row][0] = matrix[row - 1][0] + grid[row][0]
+            row += 1
+        col = 1
+        while (col < len(grid[0])):
+            matrix[0][col] = matrix[0][col - 1] + grid[0][col]
+            col += 1
+
+        row = 1
+        while (row < len(grid)):
+            col = 1
+            while (col < len(grid[0])):
+                matrix[row][col] = min(matrix[row][col - 1], matrix[row - 1][col]) + grid[row][col]
+                col += 1
+            row += 1
+
+        return matrix[row - 1][col - 1]
