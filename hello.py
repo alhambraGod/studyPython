@@ -113,23 +113,23 @@ print('\n')
 
 
 print('----------- dict ---------------')
-dict = {'111':10, '222':50, '333':80}
-print(dict['222'])
+ddd = {'111':10, '222':50, '333':80}
+print(ddd['222'])
 #print(dict['sdsdfsdf']) # error
 key = 'error'
-if (key in dict):
-  print(dict[key])
+if (key in ddd):
+  print(ddd[key])
 else:
   print("key not in dict: ", key)
   
-if (dict.get(key)):
-  print(dict[key])
+if (ddd.get(key)):
+  print(ddd[key])
 else:
   print("key not get(): ", key)
 
-print('len(dict): ', len(dict))
-dict.pop('222')
-print('len(dict): ', len(dict))
+print('len(dict): ', len(ddd))
+ddd.pop('222')
+print('len(dict): ', len(ddd))
 
 print('----------- set ---------------')
 set1  = set([1, 2, 2, 5, 9, 6, 6, 3, 3])
@@ -499,6 +499,7 @@ for func in funcArray:
 
 def count2():
     funcArray= []
+
     for i in range(1, 4):
         def func():
             j = i
@@ -917,6 +918,79 @@ print(lines)
 
 
 print('########### END: file I/O ###########')
+
+
+print('########### START: handle file and dir ###########')
+import os
+# import shutil
+
+# shutil.copy()
+
+# os.remove(), os.rename(), os.join(), os.split()
+# NOT support in Windows
+# AttributeError: module 'os' has no attribute 'uname'
+# print(os.uname())
+print(os.name)
+
+# list all files
+print([x for x in os.listdir('.') if os.path.isdir(x)])
+# list .py files
+print([x for x in os.listdir('.') if os.path.isfile(x) and os.path.splitext(x)[1]=='.py'])
+print('########### END: handle file and dir ###########')
+
+print('########### START: pickle ###########')
+import pickle
+d = dict(name='Bob', age=20, score=88)
+print(pickle.dumps(d))
+
+f = open(r'D:\temp\python_dump.txt', 'wb')
+f.write(pickle.dumps(d))
+# pickle.dump((d, f))
+f.close()
+
+f = open(r'D:\temp\python_dump.txt', 'rb')
+d = pickle.load(f)
+f.close()
+print(d)
+
+import json
+print(json.dumps(d))
+
+# every class has a __dict__ property to store instance variable
+# except the class which defines __slots__
+# json.loads() restores a dict object, and then object_hook()
+# can convert this dict object to class instance
+class TestPickle:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def run(self):
+        print('TestPickle run...')
+
+    @staticmethod
+    def toDict(std):
+        return {'name':std.name, 'age': std.age}
+
+    @staticmethod
+    def fromDict(std):
+        return TestPickle(std['name'], std['age'])
+
+t = TestPickle('pickle', 55)
+# TypeError: <hello.TestPickle object at 0x000001A86C9C4E80> is not JSON serializable
+# print(json.dumps(t))
+print(json.dumps(t, default=TestPickle.toDict))
+
+json_str = '{"age": 20, "name": "Bob"}'
+t = json.loads(json_str, object_hook=TestPickle.fromDict)
+print(t.name, t.age)
+
+str = json.dumps(t, default=lambda obj:obj.__dict__)
+print(str)
+t2 = json.loads(json_str, object_hook=TestPickle.fromDict)
+print(t2.name, t2.age)
+
+print('########### END: pickle ###########')
 ######################################################
 
 import threading
