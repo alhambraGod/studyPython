@@ -991,7 +991,31 @@ t2 = json.loads(json_str, object_hook=TestPickle.fromDict)
 print(t2.name, t2.age)
 
 print('########### END: pickle ###########')
+
+def TestTCPSocket():
+    print('########### START: TCP socket ###########')
+    import socket
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect(('www.sina.com.cn', 80))
+    s.send(b'GET / HTTP/1.1\r\nHost: www.sina.com.cn\r\nConnection: close\r\n\r\n')
+    # receive data
+    buffer = []
+    while True:
+        d = s.recv(1024)
+        if d:
+            buffer.append(d)
+        else:
+            break
+    data = b''.join(buffer)
+    s.close()
+    header, html = data.split(b'\r\n\r\n', 1)
+    print(header.decode('utf-8'))
+    with open(r'd:\temp\python_sina.html', 'wb') as f:
+        f.write(html)
+    print('########### END: TCP socket ###########')
 ######################################################
+
+exit()
 
 import threading
 
@@ -1006,7 +1030,7 @@ def timer_exit():
         counter += 1
         # print("counter： ", counter)
         if (counter >= WAIT_INPUT) and (not hasInput):
-            print('NO INPUT. Exit')
+            print('\nNO INPUT. Exit')
             # exit()  # only exit current thread
             # threading.main_thread().exit()  # error code
             from os import _exit
@@ -1029,7 +1053,7 @@ while True:
     3  --- web browser (mechanicalsoup)
     ''')
     # item = input('Please select menu item (%ds):' % WAIT_INPUT)
-    item = 3
+    item = -1  # <0 indicate exit()
     item = int(item)
 
     hasInput = True
@@ -1045,6 +1069,8 @@ while True:
     elif item == 3:
         from webBrowser import test_web_browser
         test_web_browser()
+    elif item == 4:
+        TestTCPSocket()
     else:
         exit()
     break
