@@ -3863,3 +3863,58 @@ class SolutionReorderList:
             l = lNext
             r = rNext
         return head
+
+# Triangle
+# Given a triangle, find the minimum path sum from top to bottom.
+# Each step you may move to adjacent numbers on the row below Notice
+# Bonus point if you are able to do this using only O(n)
+# extra space, where n is the total number of rows in the triangle.
+# Example
+# Given the following triangle:
+# [
+#      [2],
+#     [3,4],
+#    [6,5,7],
+#   [4,1,8,3]
+# ]
+# The minimum path sum from top to bottom is 11 (i.e., 2 + 3 + 5 + 1 = 11).
+# solution
+# store length in each row, then find the min value in last row
+# [
+#      [2],
+#     [5,6],
+#    [11,10,13],
+#   [15,11,18,13]
+# ]
+
+class SolutionTriangle:
+    """
+    @param triangle: a list of lists of integers.
+    @return: An integer, minimum path sum.
+    """
+    def minimumTotal(self, triangle):
+        # write your code here
+        if (triangle == None or len(triangle) == 0):
+            return 0
+        row = 1
+        while (row < len(triangle)):
+            col = 0
+            while (col < len(triangle[row])):
+                # calc min path values of last 2 numbers of upper row
+                if (col == 0):
+                    # for first and last number
+                    triangle[row][0] += triangle[row - 1][0]
+                elif (col == len(triangle[row]) - 1):
+                    triangle[row][col] += triangle[row - 1][col - 1]
+                else:
+                    triangle[row][col] += min(triangle[row - 1][col - 1], triangle[row - 1][col])
+                col += 1
+            row += 1
+        # search in last row for min value
+        ret = 2147483647
+        row = len(triangle) - 1
+        col = 0
+        while (col < len(triangle[row])):
+            ret = min(triangle[row][col], ret)
+            col += 1
+        return ret

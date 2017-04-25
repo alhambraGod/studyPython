@@ -625,5 +625,14 @@ ListNode.listPrint(SolutionReorderList().reorderList(l))
 
 l = ListNode.listGenerator([1,2,3,4,5])
 ListNode.listPrint(SolutionReorderList().reorderList(l))
+
+print('SolutionTriangle')
+triangle =[
+     [2],
+    [3,4],
+   [6,5,7],
+  [4,1,8,3]
+]
+print(SolutionTriangle().minimumTotal(triangle))
 ###########################################
 
