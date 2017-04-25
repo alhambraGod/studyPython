@@ -1036,8 +1036,6 @@ def timer_exit():
             from os import _exit
             _exit(0)  # exit the process
 
-hasInput = False
-counter = 0
 threadExit = threading.Thread(target=timer_exit)
 threadExit.setDaemon(True)
 threadExit.start()
@@ -1053,7 +1051,7 @@ while True:
     3  --- web browser (mechanicalsoup)
     ''')
     # item = input('Please select menu item (%ds):' % WAIT_INPUT)
-    item = -1  # <0 indicate exit()
+    item = 5  # <0 indicate exit()
     item = int(item)
 
     hasInput = True
@@ -1071,6 +1069,10 @@ while True:
         test_web_browser()
     elif item == 4:
         TestTCPSocket()
+    elif item == 5:
+        from SendMail import  sendMail
+
+        sendMail()
     else:
         exit()
     break
