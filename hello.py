@@ -1015,7 +1015,7 @@ def TestTCPSocket():
     print('########### END: TCP socket ###########')
 ######################################################
 
-exit()
+# exit()
 
 import threading
 
@@ -1051,7 +1051,7 @@ while True:
     3  --- web browser (mechanicalsoup)
     ''')
     # item = input('Please select menu item (%ds):' % WAIT_INPUT)
-    item = 5  # <0 indicate exit()
+    item = 6  # <0 indicate exit()
     item = int(item)
 
     hasInput = True
@@ -1073,6 +1073,10 @@ while True:
         from SendMail import  sendMail
 
         sendMail()
+    elif item == 6:
+        from TestSqlLite import testSqlLite
+
+        testSqlLite()
     else:
         exit()
     break
