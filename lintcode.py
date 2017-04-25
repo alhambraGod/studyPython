@@ -3787,3 +3787,79 @@ class SolutionMinimumPathSum:
             row += 1
 
         return matrix[row - 1][col - 1]
+
+# Reorder List
+# Given a singly linked list L: L0 → L1 → … → Ln-1 → Ln
+# reorder it to: L0 → Ln → L1 → Ln-1 → L2 → Ln-2 → …
+# Example
+# Given 1->2->3->4->null, reorder it to 1->4->2->3->null.
+"""
+Definition of ListNode
+class ListNode(object):
+
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+"""
+# solution
+# break the list in the middle. and reverse left list
+# l, m, r
+# each step: r -> m, l -> r. Then: m = l, l = l.next, r = r.next
+# 1,2,3,4,5
+#   l m r
+# 1,2,3,4,5,6
+#     l r (m=None)
+class SolutionReorderList:
+    """
+    @param head: The first node of the linked list.
+    @return: nothing
+    """
+    def reorderList(self, head):
+        # write your code here
+        # find length
+        lenList = 0
+        p = head
+        while (p != None):
+            lenList += 1
+            p = p.next
+        if (lenList <= 1):
+            return head
+
+        # find middle
+        l = head
+        i = 1
+        while (i < lenList // 2):
+            l = l.next
+            i += 1
+        # m is the REAL middle
+        r = l.next
+        m = None  # for even-length
+        if (lenList % 2 == 1):
+            m = l.next # for odd-length
+            r = m.next
+            m.next = None
+
+        # reverse left list
+        p = head
+        pPrev = None
+        pNext = p.next
+        while (True):
+            p.next = pPrev  # reverse
+            pPrev = p
+            p = pNext
+            pNext = pNext.next
+            if (pPrev == l):
+                break
+
+        # l, m, r
+        # each step: r -> m, l -> r. Then: m = l, l = l.next, r = r.next
+        while (l != None and r != None):
+            rNext = r.next
+            r.next = m
+            lNext = l.next
+            l.next = r
+
+            m = l
+            l = lNext
+            r = rNext
+        return head

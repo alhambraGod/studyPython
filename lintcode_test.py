@@ -615,5 +615,15 @@ grid = [[0,3,8,5,5,1,5,3,3,6,7,5,9,4,6,5,6,8,2,4,2,5,5,3,7,4,8,5,0,2,5,2,5,5,7,2
 # print(SolutionMinimumPathSum_TLE().minPathSum(grid))
 print(SolutionMinimumPathSum().minPathSum(grid))
 
+
+print('SolutionReorderList')
+l = ListNode.listGenerator([1,2,3,4])
+ListNode.listPrint(SolutionReorderList().reorderList(l))
+
+l = ListNode.listGenerator([7, 1, 6])
+ListNode.listPrint(SolutionReorderList().reorderList(l))
+
+l = ListNode.listGenerator([1,2,3,4,5])
+ListNode.listPrint(SolutionReorderList().reorderList(l))
 ###########################################
 
