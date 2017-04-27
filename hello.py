@@ -1013,9 +1013,48 @@ def TestTCPSocket():
     with open(r'd:\temp\python_sina.html', 'wb') as f:
         f.write(html)
     print('########### END: TCP socket ###########')
+
+print('########### START: coroutine ###########')
+# order: 1,2,3,4,[5,6,7,8]*,9
+def consumer():
+    print('step #2')
+    r = 'consumer init'
+    print('step #3')
+    while (True):
+        n = yield r  # return r and stop here
+        print('step #6')
+        if not n:
+            return
+        print('[Consumer] consuming %s' % n)
+        r = '200 OK'
+        print('step #7')
+
+def produce(c):
+    print('step #1')
+    r = c.send(None)
+    print('step #4')
+    print(r)
+    n = 0
+    while (n < 5):
+        n += 1
+        print('[Producer] producing %s' % n)
+        print('step #5')
+        r = c.send(n)
+        print('step #8')
+        print('[Producer] consumer return %s' % r)
+    print('step #9')
+    c.close()
+
+def testCoroutine():
+    c = consumer()
+    produce(c)
+
+testCoroutine()
+print('########### END: coroutine ###########')
+
 ######################################################
 
-# exit()
+exit()
 
 import threading
 
