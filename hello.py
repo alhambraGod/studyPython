@@ -1052,9 +1052,58 @@ def testCoroutine():
 testCoroutine()
 print('########### END: coroutine ###########')
 
+
+print('########### START: aysnc io ###########')
+import asyncio
+import threading
+import random
+# 用asyncio提供的@asyncio.coroutine可以把一个generator标记为coroutine类型，然后在coroutine内部用yield from调用另一个coroutine实现异步操作。
+# 为了简化并更好地标识异步IO，从Python 3.5开始引入了新的语法async和await，可以让coroutine的代码更简洁易读。
+
+def testAsyncIO():
+    counter = [0]
+    @asyncio.coroutine
+    def hello(counter):
+        counter[0] += 1
+        id = counter[0]
+        print('start: async io, (id: %d), (counter: %d), (thread: %s)' % (id, counter[0], threading.current_thread()))
+        yield from asyncio.sleep(1 * random.Random().randint(1, 4))
+        print('done : async io, (id: %d), (counter: %d), (thread: %s)' % (id, counter[0], threading.current_thread()))
+
+    loop = asyncio.get_event_loop()
+    tasks = [hello(counter) for x in range(3)]
+    print('Before: loop.run_until_complete')
+    loop.run_until_complete(asyncio.wait(tasks))
+    print('After: loop.run_until_complete')
+    loop.close()
+    pass
+
+def testAsyncIO_python35():
+    counter = [0]
+
+    async def hello(counter):
+        counter[0] += 1
+        id = counter[0]
+        print('start: async io, (id: %d), (counter: %d), (thread: %s)' % (id, counter[0], threading.current_thread()))
+        await(asyncio.sleep(1 * random.Random().randint(1, 4)))
+        print('done : async io, (id: %d), (counter: %d), (thread: %s)' % (id, counter[0], threading.current_thread()))
+
+    loop = asyncio.get_event_loop()
+    if (loop.is_closed()):
+        asyncio.set_event_loop(asyncio.new_event_loop())
+        loop = asyncio.get_event_loop()
+    tasks = [hello(counter) for x in range(3)]
+    print('Before: loop.run_until_complete')
+    loop.run_until_complete(asyncio.wait(tasks))
+    print('After: loop.run_until_complete')
+    loop.close()
+    pass
+
+print('########### END: aysnc io ###########')
+
 ######################################################
 
-exit()
+# exit()
 
 import threading
 
@@ -1090,7 +1139,7 @@ while True:
     3  --- web browser (mechanicalsoup)
     ''')
     # item = input('Please select menu item (%ds):' % WAIT_INPUT)
-    item = 6  # <0 indicate exit()
+    item = 7  # <0 indicate exit()
     item = int(item)
 
     hasInput = True
@@ -1116,6 +1165,9 @@ while True:
         from TestSqlLite import testSqlLite
 
         testSqlLite()
+    elif item == 7:
+        testAsyncIO()
+        testAsyncIO_python35()
     else:
         exit()
     break
